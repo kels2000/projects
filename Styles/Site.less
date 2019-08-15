@@ -1,0 +1,1138 @@
+﻿/*---------------------------------------------------------------------------------------
+    <copyright file="Site.less" company="United Shore Financial Services LLC.">
+    Copyright &copy; United Shore Financial Services Inc. 2017.
+    Copyright in the application source code, and in the information and
+    material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+    unless otherwise indicated.
+    You shall not remove or obscure any copyright, trademark or other notices.
+    You may not copy, republish, redistribute, transmit, participate in the
+    transmission of, create derivatives of, alter edit or exploit in any
+    manner any material including by storage on retrieval systems, without the
+    express written permission of United Shore Financial Services LLC.
+    </copyright>
+    ---------------------------------------------------------------------------------------*/
+@import "./variables.less";
+@import (reference) "./uds-fonts.less";
+/*CUSTOM MIX-INS*/
+
+.carousel-button-style() {
+    color: @usfs-blue;
+    font-size: 50px;
+    font-weight: bold;
+    opacity: 1;
+    font-family: "Font Awesome 5 Free";
+}
+
+.border-styles() {
+    border: 1px solid @usfs-border-grey
+}
+
+body {
+    font: 14px @usfs-futura-font;
+}
+
+#content {
+    min-height: 668px;
+}
+
+.calendar i {
+    left: 0;
+    top: 0;
+    width: 25px;
+    height: 33px;
+    padding: 8px 6px;
+}
+
+.percent i, .dollar i, .email i, .calendar i {
+    background: @usfs-light-grey;
+    position: absolute;
+    height: 33px;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid @usfs-medium-grey;
+    font-style: normal;
+    font-weight: 700;
+}
+
+#site-wrapper {
+    margin-left: 10px;
+}
+
+#footer-wrapper {
+    background-color: @usfs-orange;
+    display: flex;
+    margin-left: -15px;
+
+
+    .inner-container {
+        color: @white;
+
+        .footer-disclaimer {
+            margin-bottom: 2%;
+        }
+
+        #site-disclaimer,
+        .footer-rules #free-items {
+            text-transform: uppercase;
+            font-weight: bold;
+            display: inline;
+        }
+
+        #footer-text {
+            font-size: 15px;
+            float: right;
+        }
+
+        #footer-copyright {
+        }
+
+        .footer-logo {
+            height: 75px;
+            background-image: url("/Images/Trademark-United Shore-Horiz-White.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    }
+}
+
+#authenticated-div .dropdown-menu {
+    margin-left: 69%;
+}
+
+.header-wrapper {
+    background: @white;
+    height: 130px;
+
+    .nav-item {
+        color: @usfs-blue;
+    }
+
+    .nav-wrapper .main-link .link-text {
+        position: absolute;
+        bottom: 10px;
+        width: 80%;
+        font-size: 20px;
+    }
+
+    .nav-wrapper .main-link:hover {
+        border-bottom: 2px solid @usfs-blue;
+    }
+
+    .logo {
+        width: 165px;
+    }
+
+    #logo {
+        width: 8%;
+        height: 76px;
+        margin-top: 10px;
+        position: relative;
+        top: -20px;
+    }
+
+    #logo > a {
+        position: absolute;
+        top: -14px;
+    }
+
+    .link-text {
+        font-weight: bold;
+    }
+
+    .search-container {
+        top: 36px;
+        float: right;
+        width: 525px;
+
+
+        .util-btn {
+            position: relative;
+            float: right;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+            font-weight: bold;
+            background-color: @usfs-blue;
+            border-style: unset;
+            margin-left: 10px;
+            margin-right: 10px;
+            color: white;
+            z-index: 2;
+        }
+
+        #post {
+            color: @usfs-blue;
+        }
+
+        #post > a:visited {
+            color: @usfs-blue;
+        }
+
+        #post:after {
+            content: "+";
+            position: absolute;
+            color: @usfs-orange;
+            bottom: 8px;
+            right: 12px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+    }
+
+    .nav-container {
+        top: 35px;
+        left: 75px;
+    }
+
+    #search-box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+
+        input[type=text] {
+            position: absolute;
+            padding: 8px;
+            width: 365px;
+            border: 2px @usfs-blue solid;
+            border-radius: 30px;
+            top: 8px;
+            z-index: 1;
+        }
+    }
+}
+
+.content-body, .inner-container, .row, #content{
+    max-width: inherit;
+    font-size: 23px;
+
+    #merch-background, #tickets-background {
+        width: 300%;
+        height: 334px;
+        position: absolute;
+    }
+
+    #merch-background {
+        background-color: #2da697;
+        top: 121px;
+        left: 0;
+    }
+
+    #tickets-background {
+        background-color: #1a2f72;
+        top: 455px;
+        left: 0;
+    }
+}
+
+
+.column {
+    width: 630px;
+    position: relative;
+}
+
+
+.welcome-image {
+    background-image: url("../Images/me2you_pic.jpg");
+    background-size:cover;
+    height: 668px;
+}
+
+button a {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 32px;
+    color: white;
+}
+
+.navigation-tabs {
+    padding: 0;
+
+    .btn {
+        border: 3px solid white;
+        background-color: @usfs-blue;
+        font-size: 16px;
+        color: white;
+        float: right;
+        width: 300px;
+        height: 35px;
+        position: relative;
+        left: 200px;
+    }
+
+    .btn:hover {
+        color: white;
+        text-decoration: underline;
+        text-decoration-color: white;
+    }
+
+    .merch-box {
+        height: 668px;
+        background-size: cover;
+        background-color: @usfs-blue;
+        clear: both;
+    }
+
+    .homepage-headers {
+        color: white;
+        padding-top: 200px;
+        padding-left: 150px;
+        font-size: 50px;
+        .typo--futura__bold;
+    }
+
+    .text {
+        color: white;
+        padding-left: 20px;
+        padding-left: 150px;
+        padding-bottom: 65px;
+    }
+
+    .ticket-hub-box {
+        height: 334px;
+        background-size: cover;
+        background-color: @usfs-blue;
+        clear: both;
+    }
+}
+
+
+.event-post-search-and-claims-admin-container {
+    .results-row {
+    }
+
+    #event-list,
+    #results-list,
+    #category-list {
+        .list {
+            padding-left: 75px;
+        }
+
+        .pending-delivery-post {
+            cursor: not-allowed;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .search-box {
+            margin-bottom: 1%;
+            height: 36px;
+            margin-bottom: 1%;
+            padding-left: 50px;
+
+            .search {
+                padding: 8px;
+                width: 40%;
+            }
+        }
+    }
+
+    .search-alert > a {
+        text-decoration: underline;
+    }
+
+    .post-pic-container {
+        position: relative;
+
+        .post-pic {
+            margin-top: 0;
+            width: 300px;
+            margin-bottom: 4%;
+            height: 236px;
+        }
+
+        .post-watermark {
+            width: 300px;
+            height: 236px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+            background: rgba(245,245,245,0.6);
+        }
+    }
+
+    p {
+        color: @usfs-medium-grey-text;
+        font-size: 20px;
+        width: 300px;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    .result-preview {
+        word-wrap: break-word;
+    }
+
+    .giving-away-post-preview-header {
+        background-color: #ffffff;
+        color: #006199;
+    }
+
+    .event-preview-info {
+        .border-styles;
+        width: 300px;
+
+        .event-name {
+            margin-bottom: -4%;
+        }
+    }
+}
+
+.team-member-posts-and-ticket-hub-home-container {
+
+    .verbiage {
+        font-size: 18px;
+        margin-left: 1%;
+    }
+
+    .recent-posts-carousel .photos-row {
+        visibility: hidden;
+    }
+
+    .recent-posts-carousel.photos-row :first-child {
+        visibility: hidden;
+    }
+
+    .recent-posts-carousel.slick-initialized .photos-row {
+        visibility: visible;
+        margin-right: 150px;
+    }
+
+    .recent-posts-carousel {
+        height: 355px;
+        margin-left: 120px;
+        margin-right: 120px;
+        padding: 1% 0;
+
+        .photos-row {
+            height: 330px;
+        }
+
+        .item-post-header {
+            background-color: #ffffff;
+            width: 300px;
+            margin-left: 25px;
+            color: @usfs-blue
+        }
+
+        .post-pic {
+            margin-left: 25px;
+            margin-top: -5%;
+            width: 300px;
+            height: 243px;
+        }
+
+        p {
+            background-color: @white;
+            color: @usfs-medium-grey-text;
+            width: 400px;
+            font-size: 24px;
+            height: 39px;
+            .border-styles();
+            padding-left: 6px;
+            word-wrap: break-word;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    }
+
+    .slick-next::before {
+        .carousel-button-style();
+        content: "\f0a9";
+        margin-right: 5px;
+    }
+
+    .slick-prev {
+        left: -34px;
+    }
+
+    .slick-prev::before {
+        .carousel-button-style();
+        content: "\f0a8";
+        padding-left: 5px;
+    }
+
+
+    .postings {
+        margin-bottom: 100px;
+        margin-right: 75px;
+        margin-left: 50px;
+    }
+
+    .category-name {
+        background-color: white;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        margin-left: 40px;
+    }
+
+    .category-name > a {
+        color: @usfs-blue;
+        margin-left: 40px;
+    }
+
+    .category-name > a:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .all-ticket-categories {
+        margin-left: 0%;
+
+        .ticket-category-number {
+            float: initial;
+            padding-left: 35px;
+            color: #1a2f72;
+        }
+    }
+
+    .sub-category-names {
+        list-style: none;
+        line-height: 1.5;
+        font-size: 18px;
+        padding-left: 0px;
+        padding-top: 5px;
+        height: 167px;
+        background-color: white;
+        padding-bottom: 20px;
+
+        li > a {
+            color: @usfs-dark-grey-text;
+        }
+
+        li > a:hover {
+            cursor: pointer;
+            color: @usfs-blue;
+        }
+    }
+}
+
+.profile-and-ticket-claim-page-container {
+
+    .form-warning {
+        color: @usfs-error;
+        font-weight: bold;
+    }
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    #deleted-post-name {
+        margin-top: 15px;
+    }
+
+    #deleted-post-modal-body {
+        padding: 30px 15px 30px 15px
+    }
+
+    .modal-body {
+        margin-top: 3px;
+
+        #deleted-post-name-container {
+            margin-top: 10px;
+        }
+
+        .post-list {
+            list-style: none;
+        }
+
+        #repost-item-name-row {
+            margin-top: 5px;
+        }
+
+        #repost-item-expiration-row {
+            margin-top: 5px;
+        }
+
+        #repost-validation-text {
+            font-size: 18px;
+        }
+
+        #delete-post-validation-text {
+            font-size: 18px;
+        }
+
+        #repost-item-expiration-row {
+            margin-top: 25px;
+        }
+
+        #repost-validation-modal-datepicker {
+            margin-top: 5px;
+        }
+
+        #repost-item-name-row {
+            margin-top: 15px;
+        }
+
+        #delete-post-disclaimer {
+            margin-top: 25px;
+            font-size: 13px;
+        }
+
+        #repost-modal-record {
+            margin-top: 15px;
+        }
+    }
+
+    #delete-validation-modal-dialog {
+        width: 475px;
+    }
+
+    #repost-validation-modal-dialog {
+        width: 475px;
+    }
+
+    #repost-validation-modal-footer {
+        margin-top: 20px;
+    }
+
+    #repost-expiration-date {
+        text-align: right;
+    }
+
+    .user-information {
+        font-size: 24px;
+
+        .profile-first-name,
+        .profile-last-name,
+        .profile-email {
+            display: inline;
+        }
+
+        .profile-last-name::after {
+            content: " | "
+        }
+    }
+
+    .table-striped.table-bordered {
+        tbody td {
+            border: 1px solid @white;
+            text-align: center;
+            padding: 8px;
+        }
+    }
+
+    .tab-pane {
+        .border-styles;
+        padding: 2%;
+        margin-left: 15px;
+    }
+
+    #my-postings {
+
+        .delete-post-td {
+            border: none;
+            background-color: transparent;
+            color: @usfs-orange;
+        }
+
+        .delete-post-td:hover {
+            color: @usfs-blue;
+            text-decoration: underline;
+        }
+
+        .repost-td {
+            border: none;
+            background-color: transparent;
+            color: @usfs-orange;
+        }
+
+        .repost-td:hover {
+            color: @usfs-blue;
+            text-decoration: underline;
+        }
+
+        .cant-delete-post {
+            color: @usfs-dark-grey-text;
+            cursor: not-allowed;
+        }
+
+        .cant-repost {
+            color: @usfs-dark-grey-text;
+            cursor: not-allowed;
+        }
+
+        .delivered-post {
+            cursor: not-allowed;
+        }
+
+        .cant-view-post {
+            color: @usfs-dark-grey-text;
+            cursor: not-allowed;
+        }
+    }
+
+    .alert-danger,
+    .alert-success {
+        display: none;
+    }
+}
+
+.post-and-event-details-container {
+
+    .default-post-image {
+        width: 300px;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .slider-for .item-pics {
+        visibility: hidden;
+    }
+
+    .slider-for.item-pics:first-child {
+        visibility: visible;
+    }
+
+    .slider-for.slick-initialized .item-pics {
+        visibility: visible;
+    }
+
+    .slick-next::before {
+        .carousel-button-style();
+        content: "\f32b";
+    }
+
+    .slick-prev::before {
+        .carousel-button-style();
+        content: "\f32a"
+    }
+
+    .slider-for {
+        .item-pics {
+            border: none;
+            width: auto;
+            height: auto;
+        }
+    }
+
+    .slider-nav {
+        padding: 5px;
+        margin-bottom: 2%;
+        height: 175px;
+    }
+
+
+    .slick-active,
+    .slick-slide {
+        margin: 5px;
+        text-align: center;
+        .border-styles;
+        height: 155px;
+        padding-top: 0%;
+    }
+
+    .post-detail-text {
+        margin-top: 2%;
+        font-size: 16px;
+        word-break: break-word;
+
+        .post-description {
+            font-size: 24px;
+            padding: 25px;
+            background-color: #F5F6F8;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .post-label,
+        .event-label,
+        .description > .event-label {
+            font-weight: bold;
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .post-info,
+        .event-info {
+            margin: 0;
+        }
+
+        .contact-info > a {
+            color: @usfs-dark-grey-text;
+        }
+
+        .posting-date {
+            padding: 25px;
+            background-color: #F5F6F8;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .post-date{ 
+            font-size: 20px;
+        }
+
+        .event-detail {
+            margin-bottom: 4%;
+        }
+
+        .post-location-main {
+            padding: 25px;
+            background-color: #F5F6F8;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .post-location {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: #F5F6F8;
+        }
+    }
+
+    #claim-item,
+    #interested,
+    #edit-item,
+    #edit-event {
+        margin: 5% 1% 5% 0;
+    }
+
+    .alert-success,
+    .alert-danger {
+        display: none;
+    }
+
+    .modal-backdrop {
+        z-index: 0;
+    }
+}
+
+.create-new-container {
+    margin-left: 50px;
+    margin-right: 50px;
+
+
+    .dropzone .dz-preview.dz-error .dz-error-message {
+        top: 0;
+    }
+
+    #create-post-disclaimer-container {
+        margin-bottom: 0px;
+    }
+
+    .dropzone .dz-preview .dz-error-message:after {
+        border-bottom: none;
+        top: 0;
+    }
+
+    .edit-pictures-area {
+
+        .edit-post-pics {
+            float: right;
+            margin-top: 25px;
+        }
+
+        .edit-item-pics {
+            height: 126px;
+            width: 126px;
+            border-radius: 17px;
+            margin-right: 14px;
+        }
+
+        .edit-post-buttons {
+            margin-left: 14px;
+            float: right;
+        }
+
+        .remove-picture-button {
+            background-color: @white;
+            color: @usfs-orange;
+            margin: 0 14px 0 2px;
+        }
+    }
+
+    .delete-event-photo {
+        background-color: @white;
+        color: @usfs-orange;
+        margin-top: 174px;
+        margin-left: -130px;
+    }
+
+    .dropzone {
+        border: none;
+    }
+
+    .dz-click-zone {
+        text-align: center;
+        cursor: pointer;
+        border: 2px dashed @usfs-border-grey;
+        padding: 15%;
+        font-size: 22px;
+    }
+
+    .form-group {
+        margin-bottom: 4%;
+    }
+
+    #submit-form {
+        margin-bottom: 2%;
+        border-radius: unset;
+    }
+
+    .dropzone-previews {
+        margin-top: -5%;
+
+        .dz-preview {
+            margin: 2%;
+        }
+
+        .dz-progress {
+            top: 70%;
+        }
+    }
+
+    .dropzone .dz-message {
+        margin: 4% 0 5% 0;
+
+        p {
+            font-size: 10px;
+        }
+    }
+
+    .form-warning {
+        color: @usfs-error;
+        font-weight: bold;
+    }
+
+    .form-group input.valid {
+        .border-styles;
+    }
+
+    .input-validation-error.form-control {
+        border: 1px solid @usfs-medium-grey;
+    }
+
+    input.input-validation-error {
+        background-color: @white;
+        color: @usfs-dark-grey-text;
+    }
+
+
+    input[type=text],
+    select {
+        padding: 8px;
+        width: 100%;
+    }
+
+    label {
+        display: block;
+    }
+
+    .calendar input[type=text] {
+        text-align: right;
+        height: 33px;
+
+        &.valid {
+            position: static;
+            background: none;
+        }
+    }
+
+    #post-expiration-date {
+        width: 92%;
+    }
+
+    #event-date {
+        width: 120%;
+    }
+
+    .event-ticket-label {
+        padding-bottom: 4px;
+    }
+
+    .post-type-radio {
+        margin-top: 0px;
+    }
+
+    .post-type-radio-label {
+        display: inline;
+        font-weight: normal;
+    }
+
+    .create-post-radio-container {
+        margin-top: 5px;
+    }
+}
+
+#admin-home-page-container {
+    .nav-tabs {
+        border-bottom: none;
+    }
+
+    .tab-content {
+        .border-styles;
+        padding: 1%;
+        margin-bottom: 2%;
+    }
+}
+
+#select-ticket-winner-container {
+    padding-bottom: 3%;
+    font-size: 18px;
+
+    #event-detail-date-value {
+        width: 200px;
+    }
+
+    .list-label {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .claimer-info {
+        .border-styles;
+        padding: 8px;
+    }
+
+    .list-of-claimers {
+        overflow-y: auto;
+        height: 600px;
+        padding: 1% 2%;
+    }
+
+    .claimer-email {
+        text-decoration: underline;
+    }
+
+    #submit-winners-button {
+        margin: 15px 0px 0px 0px
+    }
+
+    #choose-ticket-winner-table {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .event-detail-value {
+        font-size: 18px;
+    }
+
+    #choose-ticket-winner-table-container {
+        margin: 50px 0px 0px 0px;
+    }
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    .modal-header {
+        height: 45px;
+    }
+
+    #chosen-winners-validation-modal-body-descripton {
+        margin: 0px 0px 15px 0px;
+    }
+
+    #chosen-winners-modal-ticket-winners-names {
+        margin: 0px 0px 15px 0px;
+    }
+
+    .alert-danger,
+    .alert-success {
+        display: none;
+    }
+}
+
+    .add-an-admin-container {
+    }
+
+h1 {
+    background-color: unset;
+    border: 0;
+    color: @usfs-blue;
+    font-size: 52px;
+    font-weight: 600;
+    padding: 0px 10px 0px 15px;
+    text-transform: uppercase;
+    text-align: center;
+    height: 65px;
+    margin-bottom: 0;
+}
+
+h2 {
+    border: 0;
+    color: @usfs-dark-grey-text;
+    font-size: 27px;
+    text-align: center;
+    height: 50px;
+    font-family: "Futura LT Pro",Helvetica,Arial,sans-serif;
+}
+
+h3 {
+    border: 0;
+    color: @usfs-blue;
+    margin-bottom: 0px;
+    font-size: 48px;
+    text-align: left;
+    font-family: "Futura LT Pro",Helvetica,Arial,sans-serif;
+}
+
+
+/* Style the list */
+ul.breadcrumb {
+    margin-left: 20px;
+    list-style: none;
+    background-color: #fff;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 14px;
+    color: @usfs-dark-grey-text;
+}
+
+/* Add an arrow symbol (>) before/behind each list item */
+ul.breadcrumb li + li:before {
+    padding-left: 5px;
+    color: #616161;
+    content: ">";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #1a2f72;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #00314d;
+    text-decoration: underline;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+}
+
+// Styles for CreateAPost
+
+//description textarea
+textarea {
+    min-height: 110px;
+    resize: none;
+}
+
+.user-posts-and-claims {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+

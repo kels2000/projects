@@ -1,0 +1,925 @@
+﻿/*---------------------------------------------------------------------------------------
+    <copyright file="Site.less" company="United Shore Financial Services LLC.">
+    Copyright &copy; United Shore Financial Services Inc. 2017.
+    Copyright in the application source code, and in the information and
+    material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+    unless otherwise indicated.
+    You shall not remove or obscure any copyright, trademark or other notices.
+    You may not copy, republish, redistribute, transmit, participate in the
+    transmission of, create derivatives of, alter edit or exploit in any
+    manner any material including by storage on retrieval systems, without the
+    express written permission of United Shore Financial Services LLC.
+    </copyright>
+    ---------------------------------------------------------------------------------------*/
+/*color variable definitions*/
+/*CUSTOM MIX-INS*/
+body {
+  font: 14px "Futura Medium", Helvetica, Arial, sans-serif;
+}
+#content {
+  min-height: 668px;
+}
+.calendar i {
+  left: 0;
+  top: 0;
+  width: 25px;
+  height: 33px;
+  padding: 8px 6px;
+}
+.percent i,
+.dollar i,
+.email i,
+.calendar i {
+  background: #e5e6e2;
+  position: absolute;
+  height: 33px;
+  border-radius: 3px 0 0 3px;
+  border: 1px solid #c7c7c7;
+  font-style: normal;
+  font-weight: 700;
+}
+#site-wrapper {
+  margin-left: 10px;
+}
+#footer-wrapper {
+  background-color: #f16f37;
+  display: flex;
+  margin-left: -15px;
+}
+#footer-wrapper .inner-container {
+  color: #ffffff;
+}
+#footer-wrapper .inner-container .footer-disclaimer {
+  margin-bottom: 2%;
+}
+#footer-wrapper .inner-container #site-disclaimer,
+#footer-wrapper .inner-container .footer-rules #free-items {
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline;
+}
+#footer-wrapper .inner-container #footer-text {
+  font-size: 15px;
+  float: right;
+}
+#footer-wrapper .inner-container .footer-logo {
+  height: 75px;
+  background-image: url("/Images/Trademark-United Shore-Horiz-White.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#authenticated-div .dropdown-menu {
+  margin-left: 69%;
+}
+.header-wrapper {
+  background: #ffffff;
+  height: 130px;
+}
+.header-wrapper .nav-item {
+  color: #006199;
+}
+.header-wrapper .nav-wrapper .main-link .link-text {
+  position: absolute;
+  bottom: 10px;
+  width: 80%;
+  font-size: 20px;
+}
+.header-wrapper .nav-wrapper .main-link:hover {
+  border-bottom: 2px solid #006199;
+}
+.header-wrapper .logo {
+  width: 165px;
+}
+.header-wrapper #logo {
+  width: 8%;
+  height: 76px;
+  margin-top: 10px;
+  position: relative;
+  top: -20px;
+}
+.header-wrapper #logo > a {
+  position: absolute;
+  top: -14px;
+}
+.header-wrapper .link-text {
+  font-weight: bold;
+}
+.header-wrapper .search-container {
+  top: 36px;
+  float: right;
+  width: 525px;
+}
+.header-wrapper .search-container .util-btn {
+  position: relative;
+  float: right;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #006199;
+  border-style: unset;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+  z-index: 2;
+}
+.header-wrapper .search-container #post {
+  color: #006199;
+}
+.header-wrapper .search-container #post > a:visited {
+  color: #006199;
+}
+.header-wrapper .search-container #post:after {
+  content: "+";
+  position: absolute;
+  color: #f16f37;
+  bottom: 8px;
+  right: 12px;
+  font-size: 3rem;
+  font-weight: bold;
+}
+.header-wrapper .nav-container {
+  top: 35px;
+  left: 75px;
+}
+.header-wrapper #search-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.header-wrapper #search-box input[type=text] {
+  position: absolute;
+  padding: 8px;
+  width: 365px;
+  border: 2px #006199 solid;
+  border-radius: 30px;
+  top: 8px;
+  z-index: 1;
+}
+.content-body,
+.inner-container,
+.row,
+#content {
+  max-width: inherit;
+  font-size: 23px;
+}
+.content-body #merch-background,
+.inner-container #merch-background,
+.row #merch-background,
+#content #merch-background,
+.content-body #tickets-background,
+.inner-container #tickets-background,
+.row #tickets-background,
+#content #tickets-background {
+  width: 300%;
+  height: 334px;
+  position: absolute;
+}
+.content-body #merch-background,
+.inner-container #merch-background,
+.row #merch-background,
+#content #merch-background {
+  background-color: #2da697;
+  top: 121px;
+  left: 0;
+}
+.content-body #tickets-background,
+.inner-container #tickets-background,
+.row #tickets-background,
+#content #tickets-background {
+  background-color: #1a2f72;
+  top: 455px;
+  left: 0;
+}
+.column {
+  width: 630px;
+  position: relative;
+}
+.welcome-image {
+  background-image: url("../Images/me2you_pic.jpg");
+  background-size: cover;
+  height: 668px;
+}
+button a {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 32px;
+  color: white;
+}
+.navigation-tabs {
+  padding: 0;
+}
+.navigation-tabs .btn {
+  border: 3px solid white;
+  background-color: #006199;
+  font-size: 16px;
+  color: white;
+  float: right;
+  width: 300px;
+  height: 35px;
+  position: relative;
+  left: 200px;
+}
+.navigation-tabs .btn:hover {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+.navigation-tabs .merch-box {
+  height: 668px;
+  background-size: cover;
+  background-color: #006199;
+  clear: both;
+}
+.navigation-tabs .homepage-headers {
+  color: white;
+  padding-top: 200px;
+  padding-left: 150px;
+  font-size: 50px;
+  font-family: futura-pt-bold, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+.navigation-tabs .text {
+  color: white;
+  padding-left: 20px;
+  padding-left: 150px;
+  padding-bottom: 65px;
+}
+.navigation-tabs .ticket-hub-box {
+  height: 334px;
+  background-size: cover;
+  background-color: #006199;
+  clear: both;
+}
+.event-post-search-and-claims-admin-container #event-list .list,
+.event-post-search-and-claims-admin-container #results-list .list,
+.event-post-search-and-claims-admin-container #category-list .list {
+  padding-left: 75px;
+}
+.event-post-search-and-claims-admin-container #event-list .pending-delivery-post,
+.event-post-search-and-claims-admin-container #results-list .pending-delivery-post,
+.event-post-search-and-claims-admin-container #category-list .pending-delivery-post {
+  cursor: not-allowed;
+}
+.event-post-search-and-claims-admin-container #event-list li,
+.event-post-search-and-claims-admin-container #results-list li,
+.event-post-search-and-claims-admin-container #category-list li {
+  list-style: none;
+}
+.event-post-search-and-claims-admin-container #event-list .search-box,
+.event-post-search-and-claims-admin-container #results-list .search-box,
+.event-post-search-and-claims-admin-container #category-list .search-box {
+  height: 36px;
+  margin-bottom: 1%;
+  padding-left: 50px;
+}
+.event-post-search-and-claims-admin-container #event-list .search-box .search,
+.event-post-search-and-claims-admin-container #results-list .search-box .search,
+.event-post-search-and-claims-admin-container #category-list .search-box .search {
+  padding: 8px;
+  width: 40%;
+}
+.event-post-search-and-claims-admin-container .search-alert > a {
+  text-decoration: underline;
+}
+.event-post-search-and-claims-admin-container .post-pic-container {
+  position: relative;
+}
+.event-post-search-and-claims-admin-container .post-pic-container .post-pic {
+  margin-top: 0;
+  width: 300px;
+  margin-bottom: 4%;
+  height: 236px;
+}
+.event-post-search-and-claims-admin-container .post-pic-container .post-watermark {
+  width: 300px;
+  height: 236px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  background: rgba(245, 245, 245, 0.6);
+}
+.event-post-search-and-claims-admin-container p {
+  color: #808080;
+  font-size: 20px;
+  width: 300px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.event-post-search-and-claims-admin-container .result-preview {
+  word-wrap: break-word;
+}
+.event-post-search-and-claims-admin-container .giving-away-post-preview-header {
+  background-color: #ffffff;
+  color: #006199;
+}
+.event-post-search-and-claims-admin-container .event-preview-info {
+  border: 1px solid #a5a5a5;
+  width: 300px;
+}
+.event-post-search-and-claims-admin-container .event-preview-info .event-name {
+  margin-bottom: -4%;
+}
+.team-member-posts-and-ticket-hub-home-container .verbiage {
+  font-size: 18px;
+  margin-left: 1%;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel .photos-row {
+  visibility: hidden;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel.photos-row :first-child {
+  visibility: hidden;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel.slick-initialized .photos-row {
+  visibility: visible;
+  margin-right: 150px;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel {
+  height: 355px;
+  margin-left: 120px;
+  margin-right: 120px;
+  padding: 1% 0;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel .photos-row {
+  height: 330px;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel .item-post-header {
+  background-color: #ffffff;
+  width: 300px;
+  margin-left: 25px;
+  color: #006199;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel .post-pic {
+  margin-left: 25px;
+  margin-top: -5%;
+  width: 300px;
+  height: 243px;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel p {
+  background-color: #ffffff;
+  color: #808080;
+  width: 400px;
+  font-size: 24px;
+  height: 39px;
+  border: 1px solid #a5a5a5;
+  padding-left: 6px;
+  word-wrap: break-word;
+}
+.team-member-posts-and-ticket-hub-home-container .recent-posts-carousel a:hover {
+  text-decoration: none;
+}
+.team-member-posts-and-ticket-hub-home-container .slick-next::before {
+  color: #006199;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 1;
+  font-family: "Font Awesome 5 Free";
+  content: "\f0a9";
+  margin-right: 5px;
+}
+.team-member-posts-and-ticket-hub-home-container .slick-prev {
+  left: -34px;
+}
+.team-member-posts-and-ticket-hub-home-container .slick-prev::before {
+  color: #006199;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 1;
+  font-family: "Font Awesome 5 Free";
+  content: "\f0a8";
+  padding-left: 5px;
+}
+.team-member-posts-and-ticket-hub-home-container .postings {
+  margin-bottom: 100px;
+  margin-right: 75px;
+  margin-left: 50px;
+}
+.team-member-posts-and-ticket-hub-home-container .category-name {
+  background-color: white;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  margin-left: 40px;
+}
+.team-member-posts-and-ticket-hub-home-container .category-name > a {
+  color: #006199;
+  margin-left: 40px;
+}
+.team-member-posts-and-ticket-hub-home-container .category-name > a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.team-member-posts-and-ticket-hub-home-container .all-ticket-categories {
+  margin-left: 0%;
+}
+.team-member-posts-and-ticket-hub-home-container .all-ticket-categories .ticket-category-number {
+  float: initial;
+  padding-left: 35px;
+  color: #1a2f72;
+}
+.team-member-posts-and-ticket-hub-home-container .sub-category-names {
+  list-style: none;
+  line-height: 1.5;
+  font-size: 18px;
+  padding-left: 0px;
+  padding-top: 5px;
+  height: 167px;
+  background-color: white;
+  padding-bottom: 20px;
+}
+.team-member-posts-and-ticket-hub-home-container .sub-category-names li > a {
+  color: #575757;
+}
+.team-member-posts-and-ticket-hub-home-container .sub-category-names li > a:hover {
+  cursor: pointer;
+  color: #006199;
+}
+.profile-and-ticket-claim-page-container .form-warning {
+  color: #ff3000;
+  font-weight: bold;
+}
+.profile-and-ticket-claim-page-container .modal-backdrop {
+  z-index: -1;
+}
+.profile-and-ticket-claim-page-container #deleted-post-name {
+  margin-top: 15px;
+}
+.profile-and-ticket-claim-page-container #deleted-post-modal-body {
+  padding: 30px 15px 30px 15px;
+}
+.profile-and-ticket-claim-page-container .modal-body {
+  margin-top: 3px;
+}
+.profile-and-ticket-claim-page-container .modal-body #deleted-post-name-container {
+  margin-top: 10px;
+}
+.profile-and-ticket-claim-page-container .modal-body .post-list {
+  list-style: none;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-item-name-row {
+  margin-top: 5px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-item-expiration-row {
+  margin-top: 5px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-validation-text {
+  font-size: 18px;
+}
+.profile-and-ticket-claim-page-container .modal-body #delete-post-validation-text {
+  font-size: 18px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-item-expiration-row {
+  margin-top: 25px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-validation-modal-datepicker {
+  margin-top: 5px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-item-name-row {
+  margin-top: 15px;
+}
+.profile-and-ticket-claim-page-container .modal-body #delete-post-disclaimer {
+  margin-top: 25px;
+  font-size: 13px;
+}
+.profile-and-ticket-claim-page-container .modal-body #repost-modal-record {
+  margin-top: 15px;
+}
+.profile-and-ticket-claim-page-container #delete-validation-modal-dialog {
+  width: 475px;
+}
+.profile-and-ticket-claim-page-container #repost-validation-modal-dialog {
+  width: 475px;
+}
+.profile-and-ticket-claim-page-container #repost-validation-modal-footer {
+  margin-top: 20px;
+}
+.profile-and-ticket-claim-page-container #repost-expiration-date {
+  text-align: right;
+}
+.profile-and-ticket-claim-page-container .user-information {
+  font-size: 24px;
+}
+.profile-and-ticket-claim-page-container .user-information .profile-first-name,
+.profile-and-ticket-claim-page-container .user-information .profile-last-name,
+.profile-and-ticket-claim-page-container .user-information .profile-email {
+  display: inline;
+}
+.profile-and-ticket-claim-page-container .user-information .profile-last-name::after {
+  content: " | ";
+}
+.profile-and-ticket-claim-page-container .table-striped.table-bordered tbody td {
+  border: 1px solid #ffffff;
+  text-align: center;
+  padding: 8px;
+}
+.profile-and-ticket-claim-page-container .tab-pane {
+  border: 1px solid #a5a5a5;
+  padding: 2%;
+  margin-left: 15px;
+}
+.profile-and-ticket-claim-page-container #my-postings .delete-post-td {
+  border: none;
+  background-color: transparent;
+  color: #f16f37;
+}
+.profile-and-ticket-claim-page-container #my-postings .delete-post-td:hover {
+  color: #006199;
+  text-decoration: underline;
+}
+.profile-and-ticket-claim-page-container #my-postings .repost-td {
+  border: none;
+  background-color: transparent;
+  color: #f16f37;
+}
+.profile-and-ticket-claim-page-container #my-postings .repost-td:hover {
+  color: #006199;
+  text-decoration: underline;
+}
+.profile-and-ticket-claim-page-container #my-postings .cant-delete-post {
+  color: #575757;
+  cursor: not-allowed;
+}
+.profile-and-ticket-claim-page-container #my-postings .cant-repost {
+  color: #575757;
+  cursor: not-allowed;
+}
+.profile-and-ticket-claim-page-container #my-postings .delivered-post {
+  cursor: not-allowed;
+}
+.profile-and-ticket-claim-page-container #my-postings .cant-view-post {
+  color: #575757;
+  cursor: not-allowed;
+}
+.profile-and-ticket-claim-page-container .alert-danger,
+.profile-and-ticket-claim-page-container .alert-success {
+  display: none;
+}
+.post-and-event-details-container .default-post-image {
+  width: 300px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+.post-and-event-details-container .slider-for .item-pics {
+  visibility: hidden;
+}
+.post-and-event-details-container .slider-for.item-pics:first-child {
+  visibility: visible;
+}
+.post-and-event-details-container .slider-for.slick-initialized .item-pics {
+  visibility: visible;
+}
+.post-and-event-details-container .slick-next::before {
+  color: #006199;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 1;
+  font-family: "Font Awesome 5 Free";
+  content: "\f32b";
+}
+.post-and-event-details-container .slick-prev::before {
+  color: #006199;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 1;
+  font-family: "Font Awesome 5 Free";
+  content: "\f32a";
+}
+.post-and-event-details-container .slider-for .item-pics {
+  border: none;
+  width: auto;
+  height: auto;
+}
+.post-and-event-details-container .slider-nav {
+  padding: 5px;
+  margin-bottom: 2%;
+  height: 175px;
+}
+.post-and-event-details-container .slick-active,
+.post-and-event-details-container .slick-slide {
+  margin: 5px;
+  text-align: center;
+  border: 1px solid #a5a5a5;
+  height: 155px;
+  padding-top: 0%;
+}
+.post-and-event-details-container .post-detail-text {
+  margin-top: 2%;
+  font-size: 16px;
+  word-break: break-word;
+}
+.post-and-event-details-container .post-detail-text .post-description {
+  font-size: 24px;
+  padding: 25px;
+  background-color: #F5F6F8;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.post-and-event-details-container .post-detail-text .post-label,
+.post-and-event-details-container .post-detail-text .event-label,
+.post-and-event-details-container .post-detail-text .description > .event-label {
+  font-weight: bold;
+  font-size: 32px;
+  margin: 0;
+}
+.post-and-event-details-container .post-detail-text .post-info,
+.post-and-event-details-container .post-detail-text .event-info {
+  margin: 0;
+}
+.post-and-event-details-container .post-detail-text .contact-info > a {
+  color: #575757;
+}
+.post-and-event-details-container .post-detail-text .posting-date {
+  padding: 25px;
+  background-color: #F5F6F8;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.post-and-event-details-container .post-detail-text .post-date {
+  font-size: 20px;
+}
+.post-and-event-details-container .post-detail-text .event-detail {
+  margin-bottom: 4%;
+}
+.post-and-event-details-container .post-detail-text .post-location-main {
+  padding: 25px;
+  background-color: #F5F6F8;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.post-and-event-details-container .post-detail-text .post-location {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #F5F6F8;
+}
+.post-and-event-details-container #claim-item,
+.post-and-event-details-container #interested,
+.post-and-event-details-container #edit-item,
+.post-and-event-details-container #edit-event {
+  margin: 5% 1% 5% 0;
+}
+.post-and-event-details-container .alert-success,
+.post-and-event-details-container .alert-danger {
+  display: none;
+}
+.post-and-event-details-container .modal-backdrop {
+  z-index: 0;
+}
+.create-new-container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.create-new-container .dropzone .dz-preview.dz-error .dz-error-message {
+  top: 0;
+}
+.create-new-container #create-post-disclaimer-container {
+  margin-bottom: 0px;
+}
+.create-new-container .dropzone .dz-preview .dz-error-message:after {
+  border-bottom: none;
+  top: 0;
+}
+.create-new-container .edit-pictures-area .edit-post-pics {
+  float: right;
+  margin-top: 25px;
+}
+.create-new-container .edit-pictures-area .edit-item-pics {
+  height: 126px;
+  width: 126px;
+  border-radius: 17px;
+  margin-right: 14px;
+}
+.create-new-container .edit-pictures-area .edit-post-buttons {
+  margin-left: 14px;
+  float: right;
+}
+.create-new-container .edit-pictures-area .remove-picture-button {
+  background-color: #ffffff;
+  color: #f16f37;
+  margin: 0 14px 0 2px;
+}
+.create-new-container .delete-event-photo {
+  background-color: #ffffff;
+  color: #f16f37;
+  margin-top: 174px;
+  margin-left: -130px;
+}
+.create-new-container .dropzone {
+  border: none;
+}
+.create-new-container .dz-click-zone {
+  text-align: center;
+  cursor: pointer;
+  border: 2px dashed #a5a5a5;
+  padding: 15%;
+  font-size: 22px;
+}
+.create-new-container .form-group {
+  margin-bottom: 4%;
+}
+.create-new-container #submit-form {
+  margin-bottom: 2%;
+  border-radius: unset;
+}
+.create-new-container .dropzone-previews {
+  margin-top: -5%;
+}
+.create-new-container .dropzone-previews .dz-preview {
+  margin: 2%;
+}
+.create-new-container .dropzone-previews .dz-progress {
+  top: 70%;
+}
+.create-new-container .dropzone .dz-message {
+  margin: 4% 0 5% 0;
+}
+.create-new-container .dropzone .dz-message p {
+  font-size: 10px;
+}
+.create-new-container .form-warning {
+  color: #ff3000;
+  font-weight: bold;
+}
+.create-new-container .form-group input.valid {
+  border: 1px solid #a5a5a5;
+}
+.create-new-container .input-validation-error.form-control {
+  border: 1px solid #c7c7c7;
+}
+.create-new-container input.input-validation-error {
+  background-color: #ffffff;
+  color: #575757;
+}
+.create-new-container input[type=text],
+.create-new-container select {
+  padding: 8px;
+  width: 100%;
+}
+.create-new-container label {
+  display: block;
+}
+.create-new-container .calendar input[type=text] {
+  text-align: right;
+  height: 33px;
+}
+.create-new-container .calendar input[type=text].valid {
+  position: static;
+  background: none;
+}
+.create-new-container #post-expiration-date {
+  width: 92%;
+}
+.create-new-container #event-date {
+  width: 120%;
+}
+.create-new-container .event-ticket-label {
+  padding-bottom: 4px;
+}
+.create-new-container .post-type-radio {
+  margin-top: 0px;
+}
+.create-new-container .post-type-radio-label {
+  display: inline;
+  font-weight: normal;
+}
+.create-new-container .create-post-radio-container {
+  margin-top: 5px;
+}
+#admin-home-page-container .nav-tabs {
+  border-bottom: none;
+}
+#admin-home-page-container .tab-content {
+  border: 1px solid #a5a5a5;
+  padding: 1%;
+  margin-bottom: 2%;
+}
+#select-ticket-winner-container {
+  padding-bottom: 3%;
+  font-size: 18px;
+}
+#select-ticket-winner-container #event-detail-date-value {
+  width: 200px;
+}
+#select-ticket-winner-container .list-label {
+  font-size: 20px;
+  font-weight: bold;
+}
+#select-ticket-winner-container .claimer-info {
+  border: 1px solid #a5a5a5;
+  padding: 8px;
+}
+#select-ticket-winner-container .list-of-claimers {
+  overflow-y: auto;
+  height: 600px;
+  padding: 1% 2%;
+}
+#select-ticket-winner-container .claimer-email {
+  text-decoration: underline;
+}
+#select-ticket-winner-container #submit-winners-button {
+  margin: 15px 0px 0px 0px;
+}
+#select-ticket-winner-container #choose-ticket-winner-table {
+  font-size: 18px;
+  text-align: center;
+}
+#select-ticket-winner-container .event-detail-value {
+  font-size: 18px;
+}
+#select-ticket-winner-container #choose-ticket-winner-table-container {
+  margin: 50px 0px 0px 0px;
+}
+#select-ticket-winner-container .modal-backdrop {
+  z-index: -1;
+}
+#select-ticket-winner-container .modal-header {
+  height: 45px;
+}
+#select-ticket-winner-container #chosen-winners-validation-modal-body-descripton {
+  margin: 0px 0px 15px 0px;
+}
+#select-ticket-winner-container #chosen-winners-modal-ticket-winners-names {
+  margin: 0px 0px 15px 0px;
+}
+#select-ticket-winner-container .alert-danger,
+#select-ticket-winner-container .alert-success {
+  display: none;
+}
+h1 {
+  background-color: unset;
+  border: 0;
+  color: #006199;
+  font-size: 52px;
+  font-weight: 600;
+  padding: 0px 10px 0px 15px;
+  text-transform: uppercase;
+  text-align: center;
+  height: 65px;
+  margin-bottom: 0;
+}
+h2 {
+  border: 0;
+  color: #575757;
+  font-size: 27px;
+  text-align: center;
+  height: 50px;
+  font-family: "Futura LT Pro", Helvetica, Arial, sans-serif;
+}
+h3 {
+  border: 0;
+  color: #006199;
+  margin-bottom: 0px;
+  font-size: 48px;
+  text-align: left;
+  font-family: "Futura LT Pro", Helvetica, Arial, sans-serif;
+}
+/* Style the list */
+ul.breadcrumb {
+  margin-left: 20px;
+  list-style: none;
+  background-color: #fff;
+}
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 14px;
+  color: #575757;
+}
+/* Add an arrow symbol (>) before/behind each list item */
+ul.breadcrumb li + li:before {
+  padding-left: 5px;
+  color: #616161;
+  content: ">";
+}
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #1a2f72;
+  text-decoration: none;
+  margin-left: 5px;
+}
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #00314d;
+  text-decoration: underline;
+}
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+}
+textarea {
+  min-height: 110px;
+  resize: none;
+}
+.user-posts-and-claims {
+  margin-left: 50px;
+  margin-right: 50px;
+}
