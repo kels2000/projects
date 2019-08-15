@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E15FCEE8-716F-4FC7-8C0C-9C6BA49FC5E7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>USFS.Domain.Me2U</RootNamespace>
+    <AssemblyName>USFS.Domain.Me2U</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Constants\Me2YouConstants.cs" />
+    <Compile Include="Constants\StoredProcedures.cs" />
+    <Compile Include="Contracts\Commands\CheckAllPostsForExpirationDateCommand.cs" />
+    <Compile Include="Contracts\Commands\InsertAdminCommand.cs" />
+    <Compile Include="Contracts\Commands\InsertEventCommand.cs" />
+    <Compile Include="Contracts\Commands\InsertPictureCommand.cs" />
+    <Compile Include="Contracts\Commands\InsertPostClaimCommand.cs" />
+    <Compile Include="Contracts\Commands\InsertPostCommand.cs" />
+    <Compile Include="Contracts\Commands\RemoveAdminCommand.cs" />
+    <Compile Include="Contracts\Commands\RemovePhotoCommand.cs" />
+    <Compile Include="Contracts\Commands\RemovePostCommand.cs" />
+    <Compile Include="Contracts\Commands\SendEmailCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdateEventCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdateEventPostStatusCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdateEventWinsRemainingCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdatePostCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdatePostToActiveCommand.cs" />
+    <Compile Include="Contracts\Commands\UpdatePostToDeliveredCommand.cs" />
+    <Compile Include="Contracts\Queries\CheckAdminRightsQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllActiveEventsQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllAdminsQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllEventsForCarouselQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllEventsForCategory.cs" />
+    <Compile Include="Contracts\Queries\GetAllEventsQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllItemRequestPostsQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllItemRequestPostsForCategoryQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllNonWinnersForEventQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllPostsBySearchQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllPostsForCategoryQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllPostsForSubCategoryQuery.cs" />
+    <Compile Include="Contracts\Queries\GetAllWinnersForEventQuery.cs" />
+    <Compile Include="Contracts\Queries\GetCategoriesForNavQuery.cs" />
+    <Compile Include="Contracts\Queries\GetEmailTemplateQuery.cs" />
+    <Compile Include="Contracts\Queries\GetEventByEventId.cs" />
+    <Compile Include="Contracts\Queries\GetEventPostPictures.cs" />
+    <Compile Include="Contracts\Queries\GetLatestPostByUserQuery.cs" />
+    <Compile Include="Contracts\Queries\GetPostByPostIdQuery.cs" />
+    <Compile Include="Contracts\Queries\GetRecentPostsForCarouselQuery.cs" />
+    <Compile Include="Contracts\Queries\GetSubCategoriesByParentCategoryIdQuery.cs" />
+    <Compile Include="Contracts\Queries\GetTicketClaimCountForEventQuery.cs" />
+    <Compile Include="Contracts\Queries\GetTicketClaimsByEventIdQuery.cs" />
+    <Compile Include="Contracts\Queries\GetUserPermissionsQuery.cs" />
+    <Compile Include="Contracts\Commands\InsertTicketClaim.cs" />
+    <Compile Include="Contracts\Commands\InsertTicketWinnerCommand.cs" />
+    <Compile Include="Contracts\Queries\SelectAllAdminsQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectAllPostClaimsByUserQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectAllPostClaimsByUserWithinThirtyDaysQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectAllPostsByUserQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectAllUsersFromOrgChartQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectPicturesForPostQuery.cs" />
+    <Compile Include="Contracts\Queries\SelectuserQuery.cs" />
+    <Compile Include="Contracts\Commands\SendNonWinnerEmailCommand.cs" />
+    <Compile Include="DTO\Admin.cs" />
+    <Compile Include="DTO\Category.cs" />
+    <Compile Include="DTO\CurrentUser.cs" />
+    <Compile Include="DTO\Email.cs" />
+    <Compile Include="DTO\EmailTemplate.cs" />
+    <Compile Include="DTO\Event.cs" />
+    <Compile Include="DTO\EventPreview.cs" />
+    <Compile Include="DTO\OrgChartUser.cs" />
+    <Compile Include="DTO\Picture.cs" />
+    <Compile Include="DTO\Post.cs" />
+    <Compile Include="DTO\PostClaim.cs" />
+    <Compile Include="DTO\PostPreview.cs" />
+    <Compile Include="DTO\TicketClaims.cs" />
+    <Compile Include="DTO\TicketWinner.cs" />
+    <Compile Include="Enumerations\CategoryEnum.cs" />
+    <Compile Include="Enumerations\EmailTemplateEnum.cs" />
+    <Compile Include="Enumerations\PostStatusEnum.cs" />
+    <Compile Include="Enumerations\PostType.cs" />
+    <Compile Include="Enumerations\PostPurposeEnum.cs" />
+    <Compile Include="Enumerations\SubCategoryEnum.cs" />
+    <Compile Include="Enumerations\TicketCategoryEnum.cs" />
+    <Compile Include="Enumerations\TicketPostStatusEnum.cs" />
+    <Compile Include="Handlers\AdminCommandHandler.cs" />
+    <Compile Include="Handlers\CategoryQueryHandler.cs" />
+    <Compile Include="Handlers\EmailCommandHandler.cs" />
+    <Compile Include="Handlers\EventCommandHandler.cs" />
+    <Compile Include="Handlers\EventQueryHandler.cs" />
+    <Compile Include="Handlers\EmailQueryHandler.cs" />
+    <Compile Include="Handlers\PostCommandHandler.cs" />
+    <Compile Include="Handlers\PostQueryHandler.cs" />
+    <Compile Include="Handlers\UserCommandHandler.cs" />
+    <Compile Include="Handlers\UserQueryHandler.cs" />
+    <Compile Include="Helpers\CustomAntiForgeryAdditionalDataProvider.cs" />
+    <Compile Include="Helpers\CustomSaltGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\EmailRepository.cs" />
+    <Compile Include="Repositories\EventRepository.cs" />
+    <Compile Include="Repositories\ICategoryRepository.cs" />
+    <Compile Include="Repositories\IEmailRepository.cs" />
+    <Compile Include="Repositories\IEventRepository.cs" />
+    <Compile Include="Repositories\IPostRepository.cs" />
+    <Compile Include="Repositories\ITicketClaimsRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\TicketClaimsRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Security\PrincipalRepresentation.cs" />
+    <Compile Include="Security\User.cs" />
+    <Compile Include="Security\UserPermissions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\typeahead.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="USFS.Core">
+      <HintPath>..\USFS.Packages\USFS.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="USFS.Core.ExternalProviders">
+      <HintPath>..\USFS.Packages\USFS.Core.ExternalProviders.dll</HintPath>
+    </Reference>
+    <Reference Include="USFS.Lending">
+      <HintPath>..\USFS.Packages\USFS.Lending.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
