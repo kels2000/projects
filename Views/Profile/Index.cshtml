@@ -1,0 +1,325 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="Index.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Domain.Me2U.DTO
+@model USFS.WebUI.Me2U.Models.ProfileModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="profile-and-ticket-claim-page-container">
+
+    <!--post can't be deleted alert-->
+    <div class="alert alert-danger delete-unsuccessful-alert" role="alert">
+        <i class="fa fa-times-circle"></i>
+        Your Item Cannot Be Deleted Because It Has Been Claimed!
+    </div>
+
+    <!--post can't be delivered alert-->
+    <div class="alert alert-danger delivered-unsuccessful-alert" role="alert">
+        <i class="fa fa-times-circle"></i>
+        Your Item Cannot Be Marked As Delivered! (status must be pending)
+    </div>
+
+    <!--post has been delivered confirmation-->
+    <div class="alert alert-success delivered-successful-alert" role="alert">
+        <i class="fa fa-check-circle"></i>
+        Your Item Has Been Delivered!
+    </div>
+
+    <!--post has been deleted confirmation-->
+    <div class="alert alert-success delete-successful-alert" role="alert">
+        <i class="fa fa-check-circle"></i>
+        Your Item Has Been Deleted!
+    </div>
+
+    <!--post has been reposted confirmation-->
+    <div class="alert alert-success repost-successful-alert" role="alert">
+        <i class="fa fa-check-circle"></i>
+        Your Item Has Been Reposted!
+    </div>
+
+    <h1>Profile</h1>
+    <h2> View the history of your claims and postings</h2>
+    <div>
+        <ul class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>Profile</li>
+        </ul>
+    </div>
+
+    <div class="user-posts-and-claims">
+        <ul id="counter-tabs" class="nav nav-tabs" role="tablist">
+            <li class="active " role="presentation"><a href="#my-postings" aria-controls="tab-one" data-toggle="tab" role="tab">My Postings</a></li>
+            <li class="" role="presentation"><a href="#my-claims" aria-controls="counter-tab-two" data-toggle="tab" role="tab">My Claims</a></li>
+        </ul>
+        <div class="tab-content row">
+            @*--------------------------------------- start user's postings table ------------------------------------------------*@
+            <div id="my-postings" class="tab-pane active col-md-12" role="tabpanel">
+            </div>
+            @*--------------------------------------- end user's postings table ------------------------------------------------*@
+
+            @*--------------------------------------- start user's claims table ------------------------------------------------*@
+            <div id="my-claims" class="tab-pane col-md-12" role="tabpanel">
+                <p style="color:white;">My Claims</p>
+                <div class="row">
+                    <table id="user-claims-table" class="table-bordered table-striped">
+                        <thead>
+                            <tr style="color:white;">
+                                <th>Posting Title</th>
+                                <th>Date Claimed</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color:#616161;">
+                            @foreach (PostClaim claim in Model.PostClaims)
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="post-title" href="@Url.Action("PostDetails", "Post", new { area = "", postId = claim.ClaimedPostId })">
+                                            @claim.PostTitle
+                                        </a>
+                                    </td>
+                                    <td>@claim.DateClaimed</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*--------------------------------------- end user's claims table ------------------------------------------------*@
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-validation-modal" tabindex="-1" role="dialog" aria-labelledby="delete-validation-modal-label">
+        <div id="delete-validation-modal-dialog" class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="delete-validation-modal-label">Delete Post</h4>
+                </div>
+                <div id="deleted-post-modal-body" class="modal-body">
+                    <div id="delete-post-validation-text"><span id="deleted-post-name"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">On second thought...</button>
+                    <button type="button" id="delete-validation-accept-button" class="btn btn-primary" data-dismiss="modal">Go for it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="repost-validation-modal" tabindex="-1" role="dialog" aria-labelledby="repost-validation-modal-label">
+        <div id="repost-validation-modal-dialog" class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="repost-validation-modal-label">Repost</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="repost-validation-text"><span id="repost-name"></span></div>
+                    <div id="repost-item-expiration-row" class="row">
+                        <div class="col-xs-12">
+                            <span id="expiration-label">Please select a new expiration date:</span>
+                        </div>
+                    </div>
+                    <div id="repost-validation-modal-datepicker" class="row">
+                        <div class="col-xs-12">
+                            <div class="calendar input-group">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                @Html.TextBox("repost-expiration-date", "Select a Date", new { @class = "datetimepicker", @id = "repost-expiration-date" })
+                            </div>
+                            <div id="expiration-date-warning-repost" class="form-warning">An Expiration date is Required</div>
+                            <div id="expiration-date-early-warning-repost" class="form-warning">Expiration date must be after Today.</div>
+                            <div id="expiration-date-past-thirty-warning-repost" class="form-warning">Expiration date limit can not exceed thirty days.</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="repost-validation-modal-footer" class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">On second thought...</button>
+                    <button type="button" id="repost-validation-accept-button" class="btn btn-primary">Go for it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        buildPostsTable()
+        replaceStatusText();
+        $('#user-claims-table').DataTable(
+            {
+                searching: true,
+                bLengthChange: false,
+                bPaginate: true,
+                bInfo: false,
+                "ordering": true
+            });
+        buildPostDataTable()
+        $('#repost-expiration-date').datetimepicker({
+            format: 'MM/DD/YYYY'
+        });
+
+        $('.form-warning').hide();
+    });
+
+    $('#delete-validation-accept-button').click(function () {
+        var check = $(this).val();
+        var table = $('#user-postings-table').DataTable();
+        $.ajax({
+            type: 'Post',
+            context: this,
+            data: { postId: check },
+            url: '@Url.Action("DeletePost", "Post")',
+            success: function (result) {
+                if (result === 'true') {
+                    $('#user-postings-table').DataTable().destroy();
+                    $('#my-postings').addClass('hidden');
+                    refreshPostsTable(check);
+                    $('.delete-successful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                } else {
+                    window.scroll(0, 0);
+                    $('.delete-unsuccessful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                }
+            }
+        });
+    });
+
+    $('#repost-validation-accept-button').click(function () {
+        var check = $(this).val();
+        var table = $('#user-postings-table').DataTable();
+        var validationCount = 0;
+        var todaysDate = new Date();
+        var expirationDate = $('#repost-expiration-date').val();
+        var newExpirationDate = new Date(expirationDate);
+        var thirtyDaysDate = new Date(todaysDate);
+        thirtyDaysDate.setDate(thirtyDaysDate.getDate() + 30);
+
+        if (expirationDate.length <= 0) {
+            $('#expiration-date-warning-repost').show();
+            validationCount++;
+        } else {
+            $('#expiration-date-warning-repost').hide();
+        }
+
+        if (newExpirationDate <= todaysDate) {
+            $('#expiration-date-early-warning-repost').show();
+            validationCount++;
+        } else {
+            $('#expiration-date-early-warning-repost').hide();
+        }
+
+        if (newExpirationDate > thirtyDaysDate) {
+            $('#expiration-date-past-thirty-warning-repost').show();
+            validationCount++;
+        } else {
+            $('#expiration-date-past-thirty-warning-repost').hide();
+        }
+
+        if (validationCount === 0) {
+            $.ajax({
+                 type: 'Post',
+                 context: this,
+                 data: { postId: check, expirationDate: $('#repost-expiration-date').val() },
+                 url: '@Url.Action("RepostItem", "Post")',
+                 success: function (result) {
+                     if (result === 'true') {
+                         $("#repost-validation-modal").modal('toggle');
+                         $('#my-postings').addClass('hidden');
+                         $('#user-postings-table').DataTable().destroy();
+                         refreshPostsTable(check);
+                         $('.repost-successful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                     } else {
+                         window.scroll(0, 0);
+                         $('.repost-unsuccessful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                     }
+                 }
+             });
+        }
+    });
+
+    function buildPostDataTable() {
+        replaceStatusText();
+        //initialize posts datatables
+        $('#user-postings-table').DataTable(
+            {
+                searching: true,
+                bLengthChange: false,
+                bPaginate: true,
+                bInfo: false,
+                "ordering": true
+            }
+        );
+    }
+
+    function refreshPostsTable(postId) {
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("ReloadPostsTable", "Profile")',
+            success: function (result) {
+                $('#my-postings').html(result);
+                buildPostDataTable();
+                goToRowPage(postId);
+                $('#my-postings').removeClass('hidden');
+            }
+        });
+    }
+
+    function buildPostsTable() {
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("ReloadPostsTable", "Profile")',
+            success: function (result) {
+                $('#my-postings').html(result);
+                buildPostDataTable();
+            }
+        });
+    }
+
+    //Goes to the page with the row that has been modified.
+    function goToRowPage(row) {
+        var table = $('#user-postings-table').DataTable();
+        var rowNumberBeforeSort = table.row('#post-' + row).node();
+        var rowNumber = table.rows({ order: 'applied' }).nodes().indexOf(rowNumberBeforeSort);
+        var pageLength = table.page.len();
+        var rowPage = Math.floor(rowNumber / pageLength);
+        if (rowPage !== 0) {
+            table.page(rowPage).draw('page');
+        }
+    }
+
+    function replaceStatusText() {
+        $('.post-status').each(function() {
+            var status = $(this).html();
+
+            if (status === '1') {
+                $(this).text('Active');
+            } else if (status === '2') {
+                $(this).text('Pending');
+            } else if (status === '3') {
+                $(this).text('Delivered');
+            } else if (status === '4') {
+                $(this).text('Inactive');
+            } else if (status === '5') {
+                $(this).text('Deleted');
+            }
+        });
+    }
+
+</script>
+

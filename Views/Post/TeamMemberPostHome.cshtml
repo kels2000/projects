@@ -1,0 +1,270 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="TeamMemberPostHome.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+
+
+@using USFS.Domain.Me2U.DTO
+@using USFS.WebUI.Me2U.Controllers
+@using USFS.Domain.Me2U.Enumerations
+@model USFS.WebUI.Me2U.Models.PostModel
+@{
+    ViewBag.Title = "TeamMemberPostHome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href=@Url.Content("/Styles/slick.css") type="text/css" />
+<link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href=@Url.Content("/Styles/slick-theme.css") type="text/css" />
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>Merchandise</li>
+    </ul>
+</div>
+
+<div class="team-member-posts-and-ticket-hub-home-container">
+
+    <h1>Merchandise</h1>
+    <h2>Look around and claim what's yours! First come, first served!</h2>
+        
+        
+            <div class="postings-categories">
+                <h3 class="category-name">@Html.ActionLink("Baby", "GetPostsForCategory", "Post", new { categoryId = 8 }, null)</h3>
+                <div class="postings row">
+                    <div class="recent-posts-carousel">
+                        @foreach (PostPreview post in Model.PostPreviews)
+                        {
+                            if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 8)
+                            {
+                                <div class="photos-row" title="@(post.PostName + " - Item Post")">
+                                    <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+                                        <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                        @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                        {
+                                            <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                        }
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="postings-categories">
+                <h3 class="category-name">@Html.ActionLink("Clothing & Shoes", "GetPostsForCategory", "Post", new { categoryId = 5 }, null)</h3>
+                <div class="postings row">
+                    <div class="recent-posts-carousel">
+
+                        @foreach (PostPreview post in Model.PostPreviews)
+                        {
+                            if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId ==5)
+                            {
+                                <div class="photos-row" title="@(post.PostName + " - Item Post")">
+                                    <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                        <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                        @if (5 == Convert.ToInt32(CategoryEnum.ClothingAndShoes.Id))
+                                        {
+                                            <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                        }
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="postings-categories">
+                <h3 class="category-name">@Html.ActionLink("Electronics & Computers", "GetPostsForCategory", "Post", new { categoryId = 1 }, null)</h3>
+                <div class="postings row">
+                    <div class="recent-posts-carousel">
+
+                        @foreach (PostPreview post in Model.PostPreviews)
+                        {
+                            if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 1)
+                            {
+                                <div class="photos-row" title="@(post.PostName + " - Item Post")">
+                                    <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                        <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                        @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                        {
+                                            <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                        }
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+    
+        <div class="postings-categories">
+            <h3 class="category-name">@Html.ActionLink("Furniture", "GetPostsForCategory", "Post", new { categoryId = 7 }, null)</h3>
+            <div class="postings row">
+                <div class="recent-posts-carousel">
+
+                    @foreach (PostPreview post in Model.PostPreviews)
+                    {
+                        if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 7)
+                        {
+                            <div class="photos-row" title="@(post.PostName)">
+                                <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                    <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                    @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                    {
+                                        <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                    }
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="postings-categories">
+            <h3 class="category-name">@Html.ActionLink("Health & Wellness", "GetPostsForCategory", "Post", new { categoryId = 4 }, null)</h3>
+            <div class="postings row">
+                <div class="recent-posts-carousel">
+
+                    @foreach (PostPreview post in Model.PostPreviews)
+                    {
+                        if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 4)
+                        {
+                            <div class="photos-row" title="@(post.PostName)">
+                                <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                    <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                    @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                    {
+                                        <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                    }
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="postings-categories">
+            <h3 class="category-name">@Html.ActionLink("Household", "GetPostsForCategory", "Post", new { categoryId = 2 }, null)</h3>
+            <div class="postings row">
+                <div class="recent-posts-carousel">
+
+                    @foreach (PostPreview post in Model.PostPreviews)
+                    {
+                        if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 2)
+                        {
+                            <div class="photos-row" title="@(post.PostName)">
+                                <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+                                    <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                    @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                    {
+                                        <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                    }
+
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    
+        <div class="postings-categories">
+            <h3 class="category-name">@Html.ActionLink("Sports", "GetPostsForCategory", "Post", new { categoryId = 6 }, null)</h3>
+            <div class="postings row">
+                <div class="recent-posts-carousel">
+
+                    @foreach (PostPreview post in Model.PostPreviews)
+                    {
+                        if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 6)
+                        {
+                            <div class="photos-row" title="@(post.PostName)">
+                                <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                    <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                    @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                    {
+                                        <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                    }
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="postings-categories">
+            <h3 class="category-name">@Html.ActionLink("Toys & Kids", "GetPostsForCategory", "Post", new { categoryId = 3 }, null)</h3>
+            <div class="postings row">
+                <div class="recent-posts-carousel">
+
+                    @foreach (PostPreview post in Model.PostPreviews)
+                    {
+                        if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id) && post.CategoryId == 3)
+                        {
+                            <div class="photos-row" title="@(post.PostName)">
+                                <a class="carousel-button" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+
+
+                                    <img class="post-pic" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                    @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                    {
+                                        <p class="result-preview item-post-header" draggable="false">@post.PostName</p>
+                                    }
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.recent-posts-carousel').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: false,
+            autoplaySpeed: 2000
+        });
+    });
+
+    $(function () {
+        limitEventNameTextPostHome();
+    });
+
+    function limitEventNameTextPostHome() {
+        //limit text on the view
+        $('.post-title-post-home').text(function (index, currentText) {
+
+            if (currentText.length > 30) {
+                return currentText.substr(0, 30) + "...";
+            } else
+                return currentText.substr(0, 30);
+        });
+    }
+</script>

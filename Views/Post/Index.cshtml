@@ -1,0 +1,260 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="Index.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Domain.Me2U.DTO
+@using USFS.WebUI.Me2U.Controllers
+@using USFS.Domain.Me2U.Enumerations
+@model USFS.WebUI.Me2U.Models.PostModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="event-post-search-and-claims-admin-container">
+    @if (Model.AllPostsForCategory != null)
+    {
+        if (Model.AllPostsForCategory.Any())
+        {
+    <div>
+        <ul class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Merchandise", "Index", "Post")</li>
+            <li>@Model.CategoryTitle</li>
+        </ul>
+    </div>
+            <h1 style="margin-bottom: 25px;">@Model.CategoryTitle</h1>
+
+            <div id="category-list">
+                <div class="results-row row">
+                    <ul class="list">
+                        @foreach (PostPreview post in Model.AllPostsForCategory)
+                        {
+                            if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id))
+                            {
+                                <li title="@(post.PostPurpose != PostPurposeEnum.ItemPost.Id ? post.PostName + " - Item Request" : post.PostName + " - Item Post")">
+                                    <div class="col-md-3">
+                                        <a class="carousel-button" draggable="false" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+                                            <div class="post-pic-container">
+                                                @if (post.PictureImagePath == null)
+                                                {
+                                                    <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                                }
+                                            </div>
+                                            @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                            {
+                                                <p class="result-preview giving-away-post-preview-header" draggable="false">@post.PostName</p>
+                                            }
+                                            else if (post.PostPurpose == (PostPurposeEnum.ItemRequest.Id))
+                                            {
+                                                <p class="result-preview item-request-post-preview-header" draggable="false">@post.PostName</p>
+                                            }
+
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                            else if (post.PostStatus == Convert.ToInt32(PostStatusEnum.PendingDelivery.Id))
+                            {
+                                <li class="pending-delivery-post" title="@post.PostName - This item has been claimed and is awaiting delivery.">
+                                    <div class="col-md-3">
+                                        <div class="post-pic-container">
+                                            @if (post.PictureImagePath == null)
+                                            {
+                                                <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                            }
+                                            else
+                                            {
+                                                <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                            }
+                                            <img class="post-watermark" draggable="false" src="~/Images/ClaimedWatermark.png" />
+                                        </div>
+                                        @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                        {
+                                            <p class="result-preview giving-away-post-preview-header" draggable="false">@post.PostName</p>
+                                        }
+                                        else if (post.PostPurpose == (PostPurposeEnum.ItemRequest.Id))
+                                        {
+                                            <p class="result-preview item-request-post-preview-header" draggable="false">@post.PostName</p>
+                                        }
+
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <ul class="pagination" style="padding-left: 50px; padding-top: 10px;"></ul>
+            </div>
+
+        }
+
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <i class="fa fa-info-circle"></i>
+                There were no results available. Head
+                <a class="alert-link" href=@Url.Action("Index","Home")>home</a> or try searching again.
+            </div>
+        }
+    }
+
+    @if (Model.SearchResults != null)
+    {
+        if (Model.SearchResults.Any())
+        {
+
+            <div>
+                <ul class="breadcrumb">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>Search Results</li>
+                </ul>
+            </div>
+
+            <h1 style="margin-bottom: 25px;">Search Results for '@Model.SearchText'</h1>
+
+
+            <div id="results-list">
+                <div class="results-row row">
+                    <ul class="list">
+                        @foreach (PostPreview post in Model.SearchResults)
+                        {
+                            if (post.PostType == "event")
+                            {
+                                <li title="@post.PostName - Event">
+                                    <div class="col-md-3">
+                                        <a class="carousel-button" draggable="false" href="@Url.Action("EventDetails", "Events", new {eventId = post.PostId})">
+                                            <p class="result-preview" draggable="false">@post.PostName</p>
+                                            <div class="post-pic-container">
+                                                @if (post.PictureImagePath == null)
+                                                {
+                                                    <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                                }
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+
+                            }
+                            else
+                            {
+                                if (post.PostStatus == Convert.ToInt32(PostStatusEnum.Active.Id))
+                                {
+                                    <li title="@(post.PostPurpose != PostPurposeEnum.ItemPost.Id ? post.PostName + " - Item Request" : post.PostName + " - Item Post")">
+                                        <div class="col-md-3">
+                                            <a class="carousel-button" draggable="false" href="@Url.Action("PostDetails", "Post", new { postId = post.PostId })">
+                                                @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                                {
+                                                    <p class="result-preview giving-away-post-preview-header" draggable="false">@post.PostName</p>
+                                                }
+                                                else if (post.PostPurpose == (PostPurposeEnum.ItemRequest.Id))
+                                                {
+                                                    <p class="result-preview item-request-post-preview-header" draggable="false">@post.PostName</p>
+                                                }
+                                                <div class="post-pic-container">
+                                                    @if (post.PictureImagePath == null)
+                                                    {
+                                                        <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                                    }
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                }
+                                else if (post.PostStatus == Convert.ToInt32(PostStatusEnum.PendingDelivery.Id))
+                                {
+                                    <li class="pending-delivery-post" title="@post.PostName - This item has been claimed and is awaiting delivery.">
+                                        <div class="col-md-3">
+                                            @if (post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+                                            {
+                                                <p class="result-preview giving-away-post-preview-header" draggable="false">@post.PostName</p>
+                                            }
+                                            else if (post.PostPurpose == (PostPurposeEnum.ItemRequest.Id))
+                                            {
+                                                <p class="result-preview item-request-post-preview-header" draggable="false">@post.PostName</p>
+                                            }
+                                            <div class="post-pic-container">
+                                                @if (post.PictureImagePath == null)
+                                                {
+                                                    <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(post.PictureImagePath)" />
+                                                }
+                                                <img class="post-watermark" draggable="false" src="~/Images/ClaimedWatermark.png" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+                <ul class="pagination"></ul>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <i class="fa fa-info-circle"></i>
+                There were no results available. Head
+                <a class="alert-link" href=@Url.Action("Index","Home")>home</a> or try searching again.
+            </div>
+        }
+    }
+
+
+</div>
+
+<script>
+    $(function () {
+        limitEventNameTextCategory();
+        var searchList = new List('results-list', {
+            valueNames: ['result-preview'],
+            page: 12,
+            pagination: true
+        });
+
+        
+        var categoryList = new List('category-list', {
+            valueNames: ['result-preview'],
+            page: 12,
+            pagination: true
+        });
+    });
+
+    function limitEventNameTextCategory() {
+        //limit text on the view 
+        $('.result-preview').text(function (index, currentText) {
+
+            if (currentText.length > 30) {
+                return currentText.substr(0, 30) + "...";
+            } else
+                return currentText.substr(0, 30);
+        });
+    }
+</script>

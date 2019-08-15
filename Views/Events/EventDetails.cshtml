@@ -1,0 +1,203 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="EventDetails.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.WebUI.Me2U.Controllers
+@model USFS.WebUI.Me2U.Models.EventModel
+@{
+    ViewBag.Title = "Event Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Ticket Hub", "Index", "Events")</li>
+        <li>Details</li>
+    </ul>
+</div>
+
+<div id="event-detail-container" class="post-and-event-details-container">
+    <h1 id="event-name">@Model.Event.EventName</h1>
+
+    <input type="hidden" value="@Model.UserLoginName" id="current-user" />
+    <input type="hidden" value="@Model.Event.EventId" id="event-id" />
+
+    <div class="row">
+        <div class="post-detail-text col-md-6">
+
+            <div class="event-detail">
+                <p class="event-label">Location: </p>
+                <p class="event-info">@Model.Event.Venue</p>
+            </div>
+
+            <div class="event-detail">
+                <p class="event-label">Time:</p>
+                <p class="event-time">@Model.Event.EventDate.ToString("F")</p>
+            </div>
+
+
+            <div id="event-desc" class="event-detail">
+                <p class="event-label">Description:</p>
+                <p class="event-desc-text">@Model.Event.EventDescription</p>
+            </div>
+
+
+            <div class="event-detail">
+                <p class="event-label">Tickets Per Winner:</p>
+                <p class="event-info">@Model.Event.Claims</p>
+            </div>
+
+            <div class="event-detail">
+                <p class="event-label">Date Posted:</p>
+                <p class="event-info">@Model.Event.DatePosted.ToString("M")</p>
+            </div>
+
+        </div>
+
+        <div class="col-md-6 post-detail-photos">
+            @if (Model.Pictures.Any())
+            {
+                <div class="slider slider-for">
+                    @foreach (var pic in Model.Pictures)
+                    {
+                        <img class="item-pics" src="@PostController.GetBaseImage(pic.PictureImagePath)" />
+                    }
+
+                </div>
+                <div class="slider slider-nav">
+                    @foreach (var pic in Model.Pictures)
+                    {
+                        <img class="item-pics" src="@PostController.GetBaseImage(pic.PictureImagePath)" />
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div>
+                    <img class="item-pics default-post-image" src="~/Images/Me2You.png" />
+                </div>
+                <div class="slider slider-nav">
+                    <img class="item-pics" src="~/Images/Me2You.png" />
+                </div>
+            }
+
+            <button type="button" id="interested" class="btn btn-primary pull-right">Raise Hand</button>
+        </div>
+    </div>
+
+
+    <!---modal to confirm user has raised their hand-->
+    <div class="modal fade" id="successful-ticket-claim-modal" tabindex="-1" role="dialog" aria-labelledby="opt-in-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="opt-in-modal-label">Thank You</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        We see you raised your hand for an event! Your name will be added to the list for the tickets requested.
+                        Tickets will be allocated 2-4 weeks prior to the event.
+                    </p>
+                    <p>
+                        If tickets are available we will reach out via email
+                        letting you know at that time. Thank you!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---end modal to confirm user has raised their hand-->
+</div>
+
+
+<script>
+    $(function () {
+        claimsValidation();
+        hideDesc();
+        $('#successful-ticket-claim').hide();
+
+        //main photo in carousel
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+
+        //carousel nav bar
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            centerMode: true,
+            focusOnSelect: true
+        });
+
+        $('#interested').on('click',
+            function() {
+                var loginName = $('#current-user').val();
+                var eventName = $('#event-name').text();
+                var eventId = $('#event-id').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("InterestedInEvent", "Events")',
+                    data: {
+                        loginName: loginName,
+                        eventName: eventName,
+                        eventId: eventId
+                    },
+                    success: function() {
+                        $('#interested').prop('disabled', true);
+                        $('#successful-ticket-claim-modal').modal('show');
+
+                    },
+                    error: function(request, status, error) {
+
+                    }
+                });
+            });
+    });
+
+    function claimsValidation() {
+
+        //this function checks to see the user has raised their hand for this event already and disables the button if they have
+        @if (Model.TicketClaims.Any(c => c.EmailAddress == Model.OrgChartUser.EmailAddress))
+        {
+             <text>
+                 $('#interested').prop('disabled', true);
+             </text>
+        }
+
+
+
+    }
+
+    function hideDesc() {
+        //this function hides the 'Event Description' field if the admin did not enter anything for it'
+        var descText = $('.event-desc-text').text();
+
+        if (descText == "" || descText == null) {
+            $('#event-desc').hide();
+        }
+    }
+</script>

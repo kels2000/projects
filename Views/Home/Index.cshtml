@@ -1,0 +1,54 @@
+﻿@*---------------------------------------------------------------------------------------
+    <copyright file="Index.cshtml" company="United Shore Financial Services LLC.">
+        Copyright &copy; United Shore Financial Services Inc.
+
+        Copyright in the application source code, and in the information and
+        material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+        unless otherwise indicated.
+
+        You shall not remove or obscure any copyright, trademark or other notices.
+        You may not copy, republish, redistribute, transmit, participate in the
+        transmission of, create derivatives of, alter edit or exploit in any
+        manner any material including by storage on retrieval systems, without the
+        express written permission of United Shore Financial Services LLC.
+    </copyright>
+    ---------------------------------------------------------------------------------------*@
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<!--Left side of the page.-->
+<div class="col-xs-6 col-sm-6 col-md-6 welcome-image"">
+</div>
+
+<!--Right side of the page.-->
+<div class="col-xs-6 col-sm-6 col-md-6 navigation-tabs">
+    <div class="merch-box" style="margin-right:-35px;">
+        <div class="column">
+            <h3 class="homepage-headers">
+                Merchandise
+            </h3>
+            <p class="text">
+                Me2You allows you to post items you no longer need, and claim items that you could use.
+                We are each others greatest asset!
+            </p>
+
+            <button class="btn"> @Html.ActionLink("Post", "CreatePost", "Post") </button>
+            <button class="btn"> @Html.ActionLink("View", "Index", "Post") </button>
+
+        </div>
+    </div>
+    <!--<div class="ticket-hub-box">
+        <div class="column">
+            <h3 class="homepage-headers">
+                Ticket Hub
+            </h3>
+            <p class="text">Ticket Hub is a space dedicated to UWM's entertainment fanatics! We love sharing free tickets to local events with our community of team members!</p>
+
+            <button class="btn"> @Html.ActionLink("Post", "CreatePost", "Post") </button>
+            <button class="btn"> @Html.ActionLink("View", "Index", "Events") </button>
+
+        </div>
+    </div>-->
+</div>

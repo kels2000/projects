@@ -1,0 +1,135 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="_MyPosts.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Domain.Me2U.DTO
+@using USFS.Domain.Me2U.Enumerations
+@model USFS.WebUI.Me2U.Models.ProfileModel
+
+<p>My Postings</p>
+<table id="user-postings-table" class="table-bordered table-striped">
+    <thead style="color:white">
+        <tr>
+            <th>Posting Title</th>
+            <th>Status</th>
+            <th>Date Posted</th>
+            <th>Delete Post</th>
+            <th>Repost?</th>
+            <th>Delivered?</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Post post in Model.Posts)
+        {
+        <tr id=" post-@post.PostId" class="delete-post-@post.PostId">
+            @if (post.PostStatus == 1)
+            {
+                <td>
+                    <p style="text-align:left;">
+                        <a class="post-title" href="@Url.Action("PostDetails", "Post", new {area = "", postId = post.PostId})">
+                        @post.PostTitle
+                        </a>
+                    </p>
+                    
+                </td>
+            }
+            else
+            {
+                <td>
+                    <span class="cant-view-post">@post.PostTitle</span>
+                </td>
+            }
+
+            <td><span class="replaceMe-@post.PostId post-status">@post.PostStatus</span></td>
+            <td>@post.DatePosted.ToString("M")</td>
+            @if (post.PostStatus == 1 || post.PostStatus == 4)
+            {
+                <td><span id="delete-button-@post.PostId"><button class="delete-post-td" value="@post.PostId" data-post-title="@post.PostTitle" data-toggle="modal" data-target="#delete-validation-modal">Delete Post</button></span></td>
+            }
+            else
+            {
+                <td><span class="cant-delete-post">Delete Post</span></td>
+            }
+
+            @if (post.PostStatus == 2 || post.PostStatus == 4)
+            {
+                <td><span id="repost-button-@post.PostId"><button class="repost-td" value="@post.PostId" data-post-title="@post.PostTitle" data-toggle="modal" data-target="#repost-validation-modal">Repost</button></span></td>
+            }
+            else
+            {
+                <td><span class="cant-repost">Repost</span></td>
+            }
+
+            @if (post.PostStatus == 3)
+            {
+                <td><input type="checkbox" value="@post.PostId" class="delivered-post" checked disabled></td>
+            }
+            else if (post.PostStatus == 2)
+            {
+                <td><input type="checkbox" value="@post.PostId" class="delivered-checkbox"></td>
+            }
+            else
+            {
+                <td><input type="checkbox" class="not-eligible-for-delivery-post" disabled /></td>
+            }
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<script>
+    $('.delete-post-td').on('click',
+        function () {
+            var check = $(this).val();
+            var table = $('#user-postings-table').DataTable();
+            $('#deleted-post-name').html($(this).data('post-title'));
+            $('#delete-validation-accept-button').val(check);
+        });
+
+        $('.delivered-checkbox').on('click',
+        function () {
+            if (this.checked) {
+                var check = $(this).val();
+                $.ajax({
+                    type: 'Post',
+                    context: this,
+                    data: { postId: check},
+                    url: '@Url.Action("MarkPostAsDelivered", "Post")',
+                    success: function (result) {
+                        if (result === 'true') {
+                            refreshPostsTable(check);
+                            $('.delivered-successful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                        } else {
+                            window.scroll(0,0);
+                            $('.delivered-unsuccessful-alert').slideDown(1000).delay(7000).slideUp(1000);
+                        }
+                    }
+                });
+            }
+        });
+
+        $('.repost-td').on('click',
+            function () {
+                var check = $(this).val();
+                var table = $('#user-postings-table').DataTable();
+                $('#expiration-date-warning-repost').hide();
+                $('#expiration-date-early-warning-repost').hide();
+                $('#expiration-date-past-thirty-warning-repost').hide();
+                $('#repost-expiration-date').data('DateTimePicker').clear();
+                $('#repost-name').html($(this).data('post-title'));
+                $('#repost-validation-accept-button').val(check);
+            });
+</script>

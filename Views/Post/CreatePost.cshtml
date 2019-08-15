@@ -1,0 +1,465 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="CreatePost.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Core
+@using USFS.Domain.Me2U.Enumerations
+@model USFS.WebUI.Me2U.Models.CreatePostModel
+
+@{
+    ViewBag.Title = "CreatePost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>Create A Post</li>
+    </ul>
+</div>
+
+@*Creates a h1 depending on if the user is creating or editing a post.*@
+
+@if (Model.PostId != 0)
+{
+    <h1>Update a Post</h1>
+}
+else
+{
+    <h1>Create a Post</h1>
+    <h2>Expand Me2You's inventory by giving to others</h2>
+}
+
+<div class="create-new-container">
+    <div id="create-post-disclaimer-container" class=" alert alert-info" role="alert">
+        <i class="fa fa-info-circle"></i>
+        <span id="create-post-disclaimer-text">
+            Participating team members agree to fully abide
+            by any rules established by United Shore with respect to Me2You. Further, participating team members agree that
+            United Shore shall have no liability or duty with respect to the items exchanged through Me2You, the delivery or
+            use of such items, or otherwise. <strong>Team members shall not receive any form of payment in connection with items posted to Me2You.</strong>
+        </span>
+    </div>
+
+    @*Form for the create post fields.*@
+    <form action="@Url.Action("SubmitPost", "Post")" class="dropzone" id="create-new-event-post" enctype="multipart/form-data" method="POST">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div>
+                        <label>Post Type:</label>
+                        <div class="create-post-radio-container">
+                            @Html.RadioButtonFor(m => m.PostPurpose, Enumeration.TryFromDisplayValue<PostPurposeEnum>("Request an Item").Id.ToString(), new { @class = "post-type-radio", id = "post-type-radio-one" }) <label class="post-type-radio-label" for="post-type-radio-one">Tickets</label>
+                        </div>
+                        <div class="create-post-radio-container">
+                            @Html.RadioButtonFor(m => m.PostPurpose, Enumeration.TryFromDisplayValue<PostPurposeEnum>("Post an Item").Id.ToString(), new { @class = "post-type-radio", id = "post-type-radio-two" }) <label class="post-type-radio-label" for="post-type-radio-two">Merchandise</label>
+                        </div>
+                        <div id="post-type-warning" class="form-warning"><span>Please select a reason for your post.</span></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category:</label>
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Enumeration.GetAll<CategoryEnum>().ToList(), "Id", "DisplayValue"), "Select A Category",
+                        new {id = "category-id", @class = "category-dropdown", name = "category-id"})
+                    <div id="category-warning" class="form-warning">A Category is Required</div>
+                </div>
+
+                @*Area for edit feature.*@
+                @if (Model.PostId != 0)
+                {
+                    <div class="form-group">
+                        <label>Sub-Category:</label>
+                        @Html.DropDownListFor(m => m.SubCategoryId, new SelectList(Model.SubcategoryList, "Value", "Text"),
+                            new {id = "subcategory-id", @class = "sub-category-dropdown", name = "subcategory-id"})
+
+                        @Html.Hidden("PostId", Model.PostId, new { id = "PostId", name = "PostId" })
+                        <div id="subCategory-warning" class="form-warning">A Sub-Category is Required</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label>Sub-Category:</label>
+                        @Html.DropDownListFor(m => m.SubCategoryId, new SelectList(Enumerable.Empty<SubCategoryEnum>(), "Id", "DisplayValue", "ParentId"), "",
+                            new {id = "subcategory-id", @class = "sub-category-dropdown", name = "subcategory-id", @disabled = "disabled"})
+                        <div id="subCategory-warning" class="form-warning">A Sub-Category is Required</div>
+                    </div>
+                }
+                @*End edit features Area.*@
+
+                <div class="form-group">
+                    <label>Title:</label>
+                    @Html.TextBoxFor(m => m.PostTitle, new { id = "post-title", name = "post-title" })
+                    <div id="title-warning" class="form-warning">A Title is Required</div>
+                    <div id="title-length-warning" class="form-warning">Title can't be longer than 50 characters.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description:</label>
+                    @Html.TextAreaFor(m => m.PostDescription, new { id = "post-description", name = "post-description" })
+                    <div id="description-warning" class="form-warning">A Description is Required</div>
+                    <div id="description-length-warning" class="form-warning">Description can't be longer than 500 characters.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Pick-up Location:</label>
+                    @Html.TextAreaFor(m => m.Location, new { id = "location", name = "location" })
+                    <div id="location-warning" class="form-warning">A Pick-up Location is Required</div>
+                    <div id="location-length-warning" class="form-warning">Pick-up Location can't be longer than 50 characters.</div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label>Expiration Date:</label>
+                        <div class="calendar input-group">
+                            <i class="glyphicon glyphicon-calendar" style="font-size: 14px;"></i>
+                            @Html.TextBoxFor(m => m.ExpirationDate, new { @class = "datetimepicker", id = "post-expiration-date", name = "post-expiration-date" })
+                        </div>
+                        <div id="expiration-date-warning" class="form-warning">An Expiration date is Required</div>
+                        <div id="expiration-date-early-warning" class="form-warning">Expiration date must be after Today.</div>
+                        <div id="expiration-date-past-thirty-warning" class="form-warning">Expiration date limit can not exceed thirty days.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Hidden("DatePosted", DateTime.Now, new { id = "date-posted", name = "date-posted" })
+                    @Html.Hidden("PostStatus", 1, new { id = "post-status", name = "post-status" })
+                    @Html.Hidden("PostedBy", Model.UserLoginName, new { id = "posted-by", name = "posted-by" })
+                </div>
+
+            </div>
+
+            @*Div for the dropzone/image upload feature.*@
+            <div class="col-md-6">
+                <div class="dz-click-zone dz-clickable dz-default dz-message ">
+                    Drag & Drop Files Here <br /> or <br />Upload From Computer
+                    <p>**JPG, JPEG & PNG Files Only</p>
+                </div>
+                <div class="dropzone-previews"></div>
+
+
+                <div class="edit-pictures-area row">
+                    @if (Model.PostId != 0)
+                    {
+                        int i = 0;
+                        <div class="edit-post-pics row col-md-12">
+                            @foreach (var pic in Model.Pictures)
+                            {
+                                <img class="edit-item-pics" id="picture-@i" src="@pic" />
+                                i++;
+                            }
+                        </div>
+                    }
+
+                    @if (Model.PostId != 0)
+                    {
+                        int i = 0;
+                        <div class="edit-post-buttons row col-md-12">
+                            @foreach (var pic in Model.Pictures)
+                            {
+                                <button class="btn remove-picture-button" data-check="@i" id="button-@i" value="@Model.TestPicturePaths[i].PictureImagePath">remove file</button>
+                                i++;
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            @*Area that will show either update or create button*@
+            @if (Model.PostId != 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" id="submit-form" class="btn btn-primary">update post</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" id="submit-form" class="btn btn-primary">create post</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.PostId != 0)
+        {
+            <input type="hidden" id="photo-count" data-count="@Model.Pictures.Count" />
+        }
+
+    </form>
+</div>
+
+<script>
+    var maxFiles = $('#photo-count').data('count');
+    var itemRequestId = '1';
+    var itemPostId = '2';
+    $(function () {
+
+        $('.datetimepicker').datetimepicker({
+            format: 'MM/DD/YYYY',
+            useCurrent: true
+        });
+
+        $('#submitted-post-alert').hide();
+        $('.form-warning').hide();
+        @if (Model.PostId == 0)
+        {
+            <text>
+                window.onload = categoryChange();
+            </text>
+        }
+        else if (Model.PostId != 0 && Model.PostPurpose == Enumeration.TryFromDisplayValue<PostPurposeEnum>("Request an Item").Id.ToString())
+        {
+            <text>
+                window.onload = categoryChange();
+            </text>
+        }
+
+        //function that fills the subcategory dropdown based on the category dropdown selected.
+        function categoryChange() {
+            var value = $('#category-id').val();
+            var purposeValue = $('input[name=PostPurpose]:checked').val();
+            $.ajax({
+                type: 'POST',
+                datatype: 'JSON',
+                data: { subcategoryId: @Model.SubCategoryId, categoryId: value },
+                url: '@Url.Action("GetSubCategories", "Post")',
+                success: function(subCategories) {
+                    $(".sub-category-dropdown").html("");
+                    if (value != '' && purposeValue === itemPostId) {
+                        $.each(subCategories,
+                            function (i, Category) {
+                                $(".sub-category-dropdown").append($('<option></option>').val(Category.Id)
+                                    .html(Category.DisplayValue));
+                                $(".sub-category-dropdown").removeAttr("disabled");
+                            });
+                    }
+                    else {
+                        $('.sub-category-dropdown').attr('disabled', true);
+                    }
+                },
+                error: function(request, status, error) {
+
+                }
+            });
+        };
+
+        $('.category-dropdown').on('change',
+            function() {
+                categoryChange();
+            });
+
+        $('#post-type-radio-one').on('click',
+            function () {
+                $(".sub-category-dropdown").html("");
+                $('.sub-category-dropdown').attr('disabled', true);
+            });
+
+        $('#post-type-radio-two').on('click',
+            function () {
+                categoryChange();
+            });
+    });
+
+    var myDropzone = null;
+    // The camelized version of the ID of the form element
+    Dropzone.options.createNewEventPost = {
+        // Dropzone Configuration
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 4,
+        maxFiles: 4 - maxFiles,
+        clickable: ".dz-click-zone",
+        previewsContainer: ".dropzone-previews",
+        addRemoveLinks: true,
+        acceptedFiles: "image/jpeg, image/png, image/jpg",
+
+        // The setting up of the dropzone
+        init: function() {
+            myDropzone = this;
+            // First change the button to actually tell Dropzone to process the queue.
+            this.element.querySelector("button[type=submit]").addEventListener("click",
+                function (e) {
+
+                    // Make sure that the form isn't actually being sent.
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    //Validate input fields and submit form
+                    var validationCount = 0;
+                    var title = $('#post-title').val();
+                    var description = $('#post-description').val();
+                    var location = $('#location').val();
+                    var expirationDate = $('#post-expiration-date').val();
+                    var category = $('#category-id').val();
+                    var subCategory = $('#subcategory-id').val();
+
+                    var todaysDate = new Date();
+                    var newExpirationDate = new Date(expirationDate);
+                    var thirtyDaysDate = new Date(todaysDate);
+                    thirtyDaysDate.setDate(thirtyDaysDate.getDate() + 30);
+                    var checkradioinput = $("input:radio[name='PostPurpose']").is(":checked");
+                    var checkedradioinputvalue = $("input:radio[name='PostPurpose']:checked").val();
+
+                    if ($("input:radio[name='PostPurpose']").is(":checked")){
+                        $('#post-type-warning').hide();
+                        validationCount++;
+                    } else {
+                        $('#post-type-warning').show();
+                    }
+
+                    if (title.length <= 0) {
+                        $('#title-warning').show();
+                    } else {
+                        $('#title-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (title.length > 50) {
+                        $('#title-length-warning').show();
+                    } else {
+                        $('#title-length-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (category.length <= 0) {
+                        $('#category-warning').show();
+                    } else {
+                        $('#category-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (description.length <= 0) {
+                        $('#description-warning').show();
+                    } else {
+                        $('#description-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (description.length > 50) {
+                        $('#description-length-warning').show();
+                    } else {
+                        $('#description-length-warning').hide();
+                        validationCount++;
+                    }
+                    if (location.length <= 0) {
+                        $('#location-warning').show();
+                    } else {
+                        $('#location-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (description.length > 500) {
+                        $('#location-length-warning').show();
+                    } else {
+                        $('#location-length-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (expirationDate.length <= 0) {
+                        $('#expiration-date-warning').show();
+                    } else {
+                        $('#expiration-date-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (newExpirationDate <= todaysDate) {
+                        $('#expiration-date-early-warning').show();
+                    } else {
+                        $('#expiration-date-early-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (newExpirationDate > thirtyDaysDate) {
+                        $('#expiration-date-past-thirty-warning').show();
+                    } else {
+                        $('#expiration-date-past-thirty-warning').hide();
+                        validationCount++;
+                    }
+
+                    if (subCategory != null && $("input:radio[name='PostPurpose']:checked").val() === itemPostId)
+                    {
+                        if (subCategory.length <= 0) {
+                            $('#subCategory-warning').show();
+                        } else {
+                            $('#subCategory-warning').hide();
+                            validationCount++;
+                        }
+                    } else if (subCategory === null && $("input:radio[name='PostPurpose']:checked").val() === itemRequestId){
+                        validationCount++;
+                    } else {
+                        $('#subCategory-warning').show();
+                    }
+
+
+                    if (validationCount === 10) {
+                        if (myDropzone.getQueuedFiles().length > 0) {
+                            myDropzone.processQueue();
+                        } else {
+                            myDropzone.uploadFiles([{ name: 'nofiles' }]);
+                        }
+                    }
+                });
+
+            this.on("successmultiple",
+                function (files, response) {
+                    location.href = '@Url.Action("RedirectToPost","Post")';
+                });
+            this.on("errormultiple",
+                function(files, response) {
+                });
+        }
+    };
+
+    //Area for edit/update post functions.
+    @if (Model.PostId != 0)
+        {
+            <text>
+    $('.remove-picture-button').on('click',
+        function (e) {
+            e.preventDefault();
+            var path = $(this).val();
+            var check = $(this).data();
+            $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                data: {
+                    postId: @Model.PostId,
+                    imagePath: path,
+                    eventId: 0
+                },
+                url: '@Url.Action("RemovePhoto", "Post")',
+                success: function (results) {
+
+                    $('#picture-' + check.check).remove();
+                    $('#button-' + check.check).remove();
+                    //update photo count each time user deletes a pic to ensure that there's never more than 4 pics
+
+                    var newCount = results.length;
+                    $('#photo-count').data('count', newCount);
+                    maxFiles = 4 - $('#photo-count').data('count');
+                    //reinitialize dropzone setting to change max file limit after delete
+                    myDropzone.options.maxFiles = maxFiles;
+                }
+            });
+        });
+            </text>
+        }
+    //End edit update post area.
+</script>

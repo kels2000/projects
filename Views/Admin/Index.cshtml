@@ -1,0 +1,95 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="Index.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+
+
+@using USFS.WebUI.Me2U.Constants
+@model USFS.WebUI.Me2U.Models.AdminModel
+@{
+    ViewBag.Title = "Admin Portal";
+}
+
+
+<div id="admin-home-page-container">
+    <div id="standard-tab-container">
+
+        <ul id="standard-tabs" class="nav nav-tabs" role="tablist">
+            <li class="active " role="presentation"><a href="#add-new-event" aria-controls="add-new-event" data-toggle="tab" role="tab">Ticket Post</a></li>
+            <li class="" role="presentation"><a id="get-ticket-claims-table" href="#view-ticket-claims" aria-controls="view-ticket-claims" data-toggle="tab" role="tab">Ticket Claims</a></li>
+            <li class="" role="presentation"><a id="get-update-events-table" href="#update-events" aria-controls="standard-tab-four" data-toggle="tab" role="tab">Update Events</a></li>
+        </ul>
+
+        <div class="tab-content row">
+            <div id="add-new-event" class="tab-pane active col-md-12" role="tabpanel">
+                <div class="row">
+                    <!--create new event form-->
+                    @Html.Partial(ViewNames.CreateEventPost, Model)
+                </div>
+            </div>
+
+            <div id="view-ticket-claims" class="tab-pane col-md-12" role="tabpanel">
+                <div class="row">
+                    <!--table of events appended here from ajax call below-->
+                </div>
+            </div>
+
+            <div id="update-events" class="tab-pane col-md-12" role="tabpanel">
+                <div class="row">
+                    <!--table of events to update appended here from ajax call below-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $('#get-ticket-claims-table').on('click',
+        function() {
+
+            $.ajax({
+                type: 'Post',
+                dataType: 'html',
+                url: '@Url.Action("TicketClaims", "Admin")',
+                success: function(results) {
+                    $('#view-ticket-claims').html(results);
+                },
+                error: function(error) {
+
+                }
+            });
+
+        });
+
+    $('#get-update-events-table').on('click',
+        function() {
+
+            $.ajax({
+                type: 'Post',
+                dataType: 'html',
+                url: '@Url.Action("UpdateEvents", "Admin")',
+                success: function(results) {
+                    $('#update-events').html(results);
+                },
+                error: function(xhr, response, status) {
+                    showAjaxError(xhr, response, status);
+                }
+
+            });
+
+        });
+
+</script>

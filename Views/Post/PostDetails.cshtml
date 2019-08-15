@@ -1,0 +1,173 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="PostDetails.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Domain.Me2U.Enumerations
+@model USFS.WebUI.Me2U.Models.PostModel
+@{
+    ViewBag.Title = "PostDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Merchandise", "Index", "Post")</li>
+        <li>Details</li>
+    </ul>
+</div>
+
+<div id="post-details-container" class="post-and-event-details-container">
+
+    @*Area For Alerts*@
+    <div class="alert alert-success" role="alert">
+        <i class="fa fa-check-circle"></i>
+        Congrats! You have claimed the @Model.Post.PostTitle! @Model.Post.PostedByFullName will contact you within the next two business days to arrange pick-up or delivery.
+        Thank you for using Me2You!
+    </div>
+
+    <div class="alert alert-danger" role="alert">
+        <i class="fa fa-times-circle"></i>
+        <span id="maximum-claims-message"></span>
+    </div>
+
+    @*End Alert Area*@
+
+    @if (Model.Post.PostPurpose == (PostPurposeEnum.ItemPost.Id))
+    {
+        <h3 draggable="false" class="post-name" style="padding-left: 52px; margin-bottom: 25px;">@Model.Post.PostTitle</h3>
+    }
+        <div class="row">
+
+            <div class="col-md-6 post-detail-photos">
+                @if (Model.Post.Pictures != null && Model.Post.Pictures.Any())
+                {
+                    <div class="slider slider-for">
+                        @foreach (var pic in Model.Post.Pictures)
+                        {
+                            <img class="item-pics" src="@pic" />
+                        }
+                    </div>
+                    <div class="slider slider-nav">
+                        @foreach (var pic in Model.Post.Pictures)
+                        {
+                            <img class="item-pics" src="@pic" />
+                        }
+                    </div>
+
+                }
+                else
+                {
+                    <div>
+                        <img class="item-pics default-post-image" src="~/Images/Me2You.png" />
+                    </div>
+                    <div class="slider slider-nav">
+                        <img class="item-pics" src="~/Images/Me2You.png" />
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-6 post-detail-text">
+                <div class="contact-info">
+                    <p class="post-info" style="font-size: 48px; display: inline-flex;">@Model.Post.PostedByFullName</p><br/>
+                    <a class="post-info post-email" style="padding-left:2px;" mailto:@Model.Post.PostedByEmailAddress">@Model.Post.PostedByEmailAddress</a>
+                </div>
+                <p class="post-description">@Model.Post.PostDescription</p>
+                <p class="post-label post-location-main">Pick-up Location</p>
+                <p class="post-info post-location">@Model.Post.Location</p>
+
+                <div class="posting-date">
+                    <p class="post-label">Post Date</p>
+                    <p class="post-info post-date">@Model.Post.DatePosted.ToString("M")</p>
+                </div>
+                <div>
+                    @if (Model.Post.PostedBy.ToLower().Equals(Model.UserLoginName.ToLower()))
+                    {
+                        <button type="button" onclick="location.href ='@Url.Action("EditPost", "Post", new {postId = Model.Post.PostId})'" id="edit-item" class="btn btn-primary pull-right" style="margin-right: 50px;">edit item</button>
+                    }
+                    else
+                    {
+                        <button type="button" id="claim-item" class="btn btn-primary pull-right" style="margin-right: 50px;">claim item</button>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+</div>
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+
+        $('#claim-item').on('click',
+            function () {
+
+                var postId = @Model.Post.PostId;
+                var postedBy = "@Model.Post.PostedByFullName";
+                var postTitle = "@Model.Post.PostTitle";
+                var postEmail = "@Model.Post.PostedByEmailAddress";
+                var postPurpose = "@Model.Post.PostPurpose";
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ClaimItem", "Post")',
+                    data: {
+                        postId: postId,
+                        postedBy: postedBy,
+                        postTitle: postTitle,
+                        postEmail: postEmail,
+                        postPurpose: postPurpose
+                    },
+                    success: function (result) {
+                        if (result[0] === "False") {
+                            window.scroll(0, 0);
+                            $('#maximum-claims-message').html('Thanks for requesting a claim, however, you\'ve exceeded the maximum attempts to claim an item(s), please try again on ' + result[1] + '. (Max. 2 Attempts per 30 days)')
+                            $('.alert-danger').slideDown(1000);
+                        } else if (result[0] === "True") {
+                            window.scroll(0, 0);
+                            $('.alert-success').slideDown(750).delay(7000).slideUp(750);
+                            $('#claim-item').prop('disabled', true);
+
+                        }
+
+                    },
+                    error: function (request, status, error) {
+
+                    }
+                });
+            });
+
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            centerMode: true,
+            focusOnSelect: true
+        });
+    })
+</script>

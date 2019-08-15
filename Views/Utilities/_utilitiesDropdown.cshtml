@@ -1,0 +1,41 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="_utilitiesDropdown.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@model USFS.WebUI.Me2U.Models.UtilitiesModel
+
+<div class="log-out navbar row">
+    <ul class="nav">
+        <li class="dropdown">
+            @if (Model.IsAuthenticated)
+            {
+                <div id="authenticated-div" class="dropdown">
+                    Welcome, <a href="#" id="log-out-link" class="dropdown-toggle" data-toggle="dropdown"><span><strong>@Model.UserName</strong></span><b class="caret"></b></a>
+                    <div class="dropdown-menu">
+                        <ul id="log-in-menu">
+                            <li class="category-link">@Html.ActionLink("My Profile", "Index", "Profile")</li>
+
+                          @*Give access to admin portal if the user is an admin*@
+                            @{if (Model.IsAdmin)
+                                {
+                                    <li class="category-link">@Html.ActionLink("Admin Portal", "Index", "Admin")</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </li>
+    </ul>
+</div>

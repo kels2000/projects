@@ -1,0 +1,196 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="TicketHubHome.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+
+@using USFS.Domain.Me2U.DTO
+@using USFS.Domain.Me2U.Enumerations
+@using USFS.ProjectTemplate.WebUIHome.Controllers
+@using USFS.WebUI.Me2U.Controllers
+@model USFS.WebUI.Me2U.Models.EventModel
+
+@{
+    ViewBag.Title = "Ticket Hub";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>Ticket Hub</li>
+    </ul>
+</div>
+
+<div class="team-member-posts-and-ticket-hub-home-container">
+
+    <h1>ticket hub</h1>
+
+    <div class="verbiage">
+        <h2>Find and claim tickets to local events!</h2>
+    </div>
+
+    <div class="recent-posts-carousel">
+        @foreach (EventPreview eventPost in Model.EventPreviews)
+        {
+            <div class="photos-row" title="@eventPost.EventName">
+                <a class="carousel-button" href="@Url.Action("EventDetails", "Events", new {eventId = eventPost.EventId})">
+                    <p class="post-title-ticket-hub-home">@eventPost.EventName</p>
+                    <img class="post-pic" src="@PostController.GetBaseImage(eventPost.PictureImagePath)" />
+                </a>
+            </div>
+
+        }
+    </div>
+
+    <div class="all-ticket-categories row">
+        <h3 class="category-name">
+            @Html.ActionLink("Concerts", "AllEventsByCategory", "Events", new { categoryId = 3 }, null)
+            <span class="ticket-category-number">@Model.Events.Where(r => r.CategoryId.Id == "3").Count()</span>
+        </h3>
+        <div class="results-row row">
+            <ul class="list">
+                @foreach (EventPreview ticketPost in Model.EventPreviews)
+                {
+
+                    <li title="@ticketPost.EventName">
+                        <div class="col-md-3">
+                            <a class="carousel-button" draggable="false" href="@Url.Action("EventDetails", "Events", new {eventId = ticketPost.EventId})">
+                                <div class="event-preview-info">
+                                    <p class="event-preview event-name">@ticketPost.EventName</p>
+                                    <p class="event-date">@ticketPost.EventDate.ToString("M")</p>
+                                </div>
+                                <div class="post-pic-container">
+                                    @if (ticketPost.PictureImagePath == null)
+                                    {
+                                        <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                    }
+                                    else
+                                    {
+                                        <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(ticketPost.PictureImagePath)" />
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="all-ticket-categories row">
+        <h3 class="category-name">
+            @Html.ActionLink("Family", "AllEventsByCategory", "Events", new { categoryId = 2 }, null)
+            <span class="ticket-category-number">@Model.Events.Where(r => r.CategoryId.Id == "2").Count()</span>
+        </h3>
+        <div class="results-row row">
+            <ul class="list">
+                @foreach (EventPreview ticketPost in Model.EventPreviews)
+                {
+
+                    <li title="@ticketPost.EventName">
+                        <div class="col-md-3">
+                            <a class="carousel-button" draggable="false" href="@Url.Action("EventDetails", "Events", new {eventId = ticketPost.EventId})">
+                                <div class="event-preview-info">
+                                    <p class="event-preview event-name">@ticketPost.EventName</p>
+                                    <p class="event-date">@ticketPost.EventDate.ToString("M")</p>
+                                </div>
+                                <div class="post-pic-container">
+                                    @if (ticketPost.PictureImagePath == null)
+                                    {
+                                        <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                    }
+                                    else
+                                    {
+                                        <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(ticketPost.PictureImagePath)" />
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="all-ticket-categories row">
+        <h3 class="category-name">
+            @Html.ActionLink("Sports", "AllEventsByCategory", "Events", new { categoryId = 1 }, null)
+            <span class="ticket-category-number">@Model.Events.Where(r => r.CategoryId.Id == "1").Count()</span>
+        </h3>
+        <div class="results-row row">
+            <ul class="list">
+                @foreach (EventPreview ticketPost in Model.EventPreviews)
+                {
+
+                    <li title="@ticketPost.EventName">
+                        <div class="col-md-3">
+                            <a class="carousel-button" draggable="false" href="@Url.Action("EventDetails", "Events", new {eventId = ticketPost.EventId})">
+                                <div class="event-preview-info">
+                                    <p class="event-preview event-name">@ticketPost.EventName</p>
+                                    <p class="event-date">@ticketPost.EventDate.ToString("M")</p>
+                                </div>
+                                <div class="post-pic-container">
+                                    @if (ticketPost.PictureImagePath == null)
+                                    {
+                                        <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                    }
+                                    else
+                                    {
+                                        <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(ticketPost.PictureImagePath)" />
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        //initialize slick.js carousel
+        $('.recent-posts-carousel').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000
+        });
+
+        $(function () {
+            limitEventNameTextTicketHubHome();
+        });
+
+        function limitEventNameTextTicketHubHome() {
+            //limit text on the view 
+            $('.post-title-ticket-hub-home').text(function (index, currentText) {
+
+                if (currentText.length > 30) {
+                    return currentText.substr(0, 30) + "...";
+                } else {
+                    return currentText.substr(0, 30);
+                }
+            });
+        }
+    });
+</script>

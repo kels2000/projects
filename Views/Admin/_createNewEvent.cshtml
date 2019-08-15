@@ -1,0 +1,278 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="_createNewEvent.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Core
+@using USFS.Domain.Me2U.Enumerations
+@using USFS.WebUI.Me2U.Controllers
+@model USFS.WebUI.Me2U.Models.AdminModel
+
+<div class="create-new-container">
+
+    @if (Model.Event != null)
+    {
+        <h1 class="form-header">Update Ticket Post</h1>
+    }
+    else
+    {
+        <h1 class="form-header">Create New Ticket Post</h1>
+    }
+
+    <div class="alert alert-success" id="successful-creation" role="alert">
+        <i class="fa fa-check" aria-hidden="true"></i> WOO HOO! Your ticket post has been created!
+    </div>
+
+    <form action="@Url.Action("SaveEvent", "Admin")" class="dropzone" id="create-new-event-post" enctype="multipart/form-data" method="POST">
+
+        @Html.HiddenFor(m => m.Event.EventId, new { id = "event-id" })
+        <!-- EVENT INFO FIELDS-->
+        <div class="row">
+            <div class="col-md-6 event-info">
+                @if (Model.Event != null)
+                {
+                    //if editing then this drop dowm list will populate the selected value
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <p id="category-warning" class="form-warning">A Category is Required.</p>
+                        @Html.DropDownListFor(m => m.Event.CategoryId.Id, new SelectList(Enumeration.GetAll<TicketCategoryEnum>().ToList(), "Id", "DisplayValue"), new { id = "category-id", name = "event-category" })
+
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <p id="category-warning" class="form-warning">A Category is Required.</p>
+                        @Html.DropDownListFor(m => m.Event.CategoryId.Id, new SelectList(Enumeration.GetAll<TicketCategoryEnum>().ToList(), "Id", "DisplayValue"), "Select A Category",
+                            new { id = "category-id", name = "event-category" })
+                    </div>
+                }
+
+
+                <div class="form-group">
+                    <label>Venue:</label>
+                    <p id="venue-warning" class="form-warning">A Venue is Required.</p>
+                    @Html.TextBoxFor(m => m.Event.Venue, new { id = "venue", name = "event-venue" })
+                </div>
+
+                <div class="form-group">
+                    <label>Event Name:</label>
+                    <p id="event-name-warning" class="form-warning">An Event Name is Required</p>
+                    @Html.TextBoxFor(m => m.Event.EventName, new { id = "event-name", name = "event-name" })
+                </div>
+
+                <div class="form-group">
+                    <div class="event-desc">
+                        <label>Event Description:</label>
+                        @Html.TextAreaFor(m => m.Event.EventDescription, new { id = "event-desc", name = "event-desc" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="event-date col-md-4">
+                        <label>Event Date:</label>
+                        <p id="event-date-warning" class="form-warning">An Event Date is Required</p>
+                        <p id="event-date-passed-warning" class="form-warning">Event Date Must be After Today. <p>
+                            <div class="calendar input-group">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                @Html.TextBoxFor(m => m.Event.EventDate, new { @class = "datetimepicker", id = "event-date" })
+                            </div>
+                    </div>
+
+
+
+                    <div class="ticket-quantity col-md-4">
+                        <label class="event-ticket-label">Tickets Available:</label>
+                        <p id="quantity-warning" class="form-warning">A Quantity Value is Required</p>
+                        <p id="quantity-format-warning" class="form-warning">A Numerical Value is Required.</p>
+                        <p id="quantity-negative-number-warning" class="form-warning">Please Enter a Number Greater Than 0.</p>
+
+                        @Html.TextBoxFor(m => m.Event.Quantity, new { id = "ticket-quantity", name = "ticket-quantity" })
+                    </div>
+
+                    <div class="max-claims col-md-4">
+                        <label class="event-ticket-label">Claims Per Person:</label>
+                        <p id="claims-warning" class="form-warning">A Claims Value is Required</p>
+                        <p id="claims-format-warning" class="form-warning">A Numerical Value is Required.</p>
+                        <p id="claims-negative-number-warning" class="form-warning">Please Enter a Number Greater Than 0.</p>
+                        @Html.TextBoxFor(m => m.Event.Claims, new { id = "max-claims", name = "max-claims" })
+                    </div>
+                </div>
+            </div>
+
+            <!--PHOTO UPLOAD AREA -->
+            <div class="col-md-6">
+                <div class="dz-click-zone dz-clickable dz-default dz-message ">
+                    Drag & Drop Files Here
+                    <p>**JPG, JPEG & PNG Files Only</p>
+                </div>
+                <div class="dropzone-previews"></div>
+            </div>
+
+            <!-- EDIT EVENTS-->
+            <div class="edit-pictures-area row">
+                @if (Model.Event != null)
+                {
+                    int i = 0;
+                    <div class="edit-post-pics row col-md-6">
+                        @foreach (var pic in Model.Pictures)
+                        {
+                            <img class="edit-item-pics" id="picture-@i" src="@PostController.GetBaseImage(@pic.PictureImagePath)" />
+                            i++;
+                        }
+                    </div>
+                }
+
+                @if (Model.Event != null)
+                {
+                    int i = 0;
+                    <div class="edit-post-buttons row col-md-6">
+                        @foreach (var pic in Model.Pictures)
+                        {
+                            <button class="btn remove-picture-button" data-check="@i" id="button-@i" value="@Model.Pictures[i].PictureImagePath">remove file</button>
+                            i++;
+                        }
+                    </div>
+                }
+            </div>
+
+            <!--UPDATE OR CREATE BUTTONS-->
+            @if (Model.Event != null)
+            {
+                <div>
+                    <button type="submit" id="submit-form" class="btn btn-primary pull-right">update post</button>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <button type="submit" id="submit-form" class="btn btn-primary pull-right">create post</button>
+                </div>
+            }
+        </div>
+
+        @if (Model.Event != null)
+        {
+            <input type="hidden" id="photo-count" data-count="@Model.Pictures.Count" />
+        }
+
+    </form>
+
+</div>
+
+<script type="text/javascript" src="/Scripts/validation.js"></script>
+<script>
+   
+    var maxFiles = $('#photo-count').data('count');
+
+    $(function () {
+        $('.datetimepicker').datetimepicker();
+        $('.form-warning').hide();
+        $('#successful-creation').hide();
+    });
+
+    var myDropzone = null;
+    // The camelized version of the ID of the form element
+    Dropzone.options.createNewEventPost = {
+        // Dropzone Configuration
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 4,
+        maxFiles: 4 - maxFiles,
+        clickable: ".dz-click-zone",
+        previewsContainer: ".dropzone-previews",
+        addRemoveLinks: true,
+        acceptedFiles: "image/jpeg, image/png, image/jpg",
+
+        // The setting up of the dropzone
+        init: function () {
+            myDropzone = this;
+            // First change the button to actually tell Dropzone to process the queue.
+            this.element.querySelector("button[type=submit]").addEventListener("click",
+                function (e) {
+                    // Make sure that the form isn't actually being sent.
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    //call create new event validation from js file
+                    me2youValidation.createNewEventValidateAndSubmit();
+
+
+                });
+
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple",
+                function () {
+                    // Gets triggered when the form is actually being sent.
+                    // Hide the success button or the complete form.
+
+                    showAjaxLoader();
+                });
+            this.on("successmultiple",
+                function (files, response) {
+           
+                    // Gets triggered when the files have successfully been sent.
+                    // Redirect user or notify of success.
+                    hideAjaxLoader();
+                    
+                    window.location.replace('@Url.Action("Index", "Admin")');
+                    
+
+                });
+            this.on("errormultiple",
+                function (files, response) {
+                    // Gets triggered when there was an error sending the files.
+                    // Maybe show form again, and notify user of error
+                });
+        }
+
+    };
+
+
+
+    @if (Model.Event != null)
+        {
+            <text>
+    $('.remove-picture-button').on('click',
+        function (e) {
+            e.preventDefault();
+            var path = $(this).val();
+            var check = $(this).data();
+            $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                data: {
+                    eventId: @Model.Event.EventId,
+                    imagePath: path,
+                    postId: 0
+                },
+                url: '@Url.Action("RemovePhoto", "Post")',
+                success: function(results) {
+                    $('#picture-' + check.check).remove();
+                    $('#button-' + check.check).remove();
+                    //update photo count each time user deletes a pic to ensure that there's never more than 4 pics
+                    var newCount = results.length;
+                    $('#photo-count').data('count', newCount);
+                    maxFiles = 4 - $('#photo-count').data('count');
+                    //reinitialize dropzone setting to change max file limit after delete
+                    myDropzone.options.maxFiles = maxFiles;
+                }
+            });
+        });
+            </text>
+        }
+
+</script>
+

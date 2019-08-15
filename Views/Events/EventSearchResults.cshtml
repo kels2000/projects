@@ -1,0 +1,124 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="EventSearchResults.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+@using USFS.Domain.Me2U.DTO
+@using USFS.WebUI.Me2U.Controllers
+@using Event = StyleCop.CSharp.Event
+@model USFS.WebUI.Me2U.Models.EventModel
+
+@{
+    ViewBag.Title = "Search Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>Search Results</li>
+    </ul>
+</div>
+
+<div class="event-post-search-and-claims-admin-container">
+
+    @if (Model.CategoryId == 1)
+    {
+        <h1>Sports</h1>
+    }
+    else if (Model.CategoryId == 2)
+    {
+        <h1>Family</h1>
+    }
+    else if (Model.CategoryId == 3)
+    {
+        <h1>Concerts</h1>
+    }
+
+   
+
+    @if (Model.EventPreviews != null)
+    {
+        <div id="event-list">
+            <div class="search-box">
+                <input type="text" class="search" placeholder="Filter..." />
+            </div>
+
+            <div class="results-row row">
+                <ul class="list">
+                    @foreach (EventPreview ticketPost in Model.EventPreviews)
+                    {
+
+                        <li title="@ticketPost.EventName">
+                            <div class="col-md-3">
+                                <a class="carousel-button" draggable="false" href="@Url.Action("EventDetails", "Events", new {eventId = ticketPost.EventId})">
+                                    <div class="event-preview-info">
+                                        <p class="event-preview event-name">@ticketPost.EventName</p>
+                                        <p class="event-date">@ticketPost.EventDate.ToString("M")</p>
+                                    </div>
+                                    <div class="post-pic-container">
+                                        @if (ticketPost.PictureImagePath == null)
+                                        {
+                                            <img class="post-pic" draggable="false" src="~/Images/Me2You.png" />
+                                        }
+                                        else
+                                        {
+                                            <img class="post-pic" draggable="false" src="@PostController.GetBaseImage(ticketPost.PictureImagePath)" />
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+
+                    }
+                </ul>
+            </div>
+            <ul class="pagination"></ul>
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-danger search-alert" role="alert">
+            <i class="fa fa-times-circle"></i>
+            There were no results available for this category. Head
+            <a class="alert-link" href=@Url.Action("Index", "Home")>home</a> or try searching again.
+        </div>
+    }
+
+</div>
+
+<script>
+    $(function () {
+        limitEventNameText();
+
+        //initlizes list.js to allow pagination and filter or search results
+        var eventList = new List('event-list', {
+            valueNames: ['event-preview'],
+            page: 12,
+            pagination: true
+        });
+    });
+
+    function limitEventNameText() {
+        //limit text on the view 
+        $('.event-name').text(function (index, currentText) {
+
+            if (currentText.length > 30) {
+                return currentText.substr(0, 30) + "...";
+            } else
+                return currentText.substr(0, 30);
+        });
+    }
+
+</script>

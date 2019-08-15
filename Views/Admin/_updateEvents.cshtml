@@ -1,0 +1,126 @@
+﻿@*---------------------------------------------------------------------------------------
+       <copyright file="_updateEvents.cshtml" company="United Shore Financial Services LLC.">
+           Copyright &copy; United Shore Financial Services Inc. 2017.
+
+           Copyright in the application source code, and in the information and
+           material therein and in their arrangement, is owned by United Shore Financial Services LLC.
+           unless otherwise indicated.
+
+           You shall not remove or obscure any copyright, trademark or other notices.
+           You may not copy, republish, redistribute, transmit, participate in the
+           transmission of, create derivatives of, alter edit or exploit in any
+           manner any material including by storage on retrieval systems, without the
+           express written permission of United Shore Financial Services LLC.
+       </copyright>
+    ---------------------------------------------------------------------------------------*@
+
+@using USFS.Core
+@using USFS.Domain.Me2U
+@using USFS.Domain.Me2U.Enumerations
+
+@model USFS.WebUI.Me2U.Models.AdminModel
+
+<div class="profile-and-ticket-claim-page-container">
+
+    <h1>Update Events</h1>
+    <table id="update-events-table" class="table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Edit</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventPost in Model.Events)
+            {
+                IEnumerable<TicketPostStatusEnum> statusEnum = Enumeration.GetAll<TicketPostStatusEnum>().ToList();
+                IEnumerable<SelectListItem> statusList = statusEnum.Select(item => new SelectListItem()
+                {
+                    Text = item.DisplayValue,
+                    Value = item.Id,
+                    Selected = item.Id.Equals(eventPost.PostStatus.Id)
+                });
+
+                <tr>
+
+                    @if (eventPost.EventDate.AddDays(1) < DateTime.Now)
+                    {
+                        //if this event has passed then disable the user from changing the event's status 
+                        <td>@Html.DropDownListFor(m => eventPost.PostStatus, statusList, new { @class = "post-status", @data_event_id = eventPost.EventId, @disabled = "disabled" })</td>
+                    }
+                    else
+                    {
+                        <td>@Html.DropDownListFor(m => eventPost.PostStatus, statusList, new { @class = "post-status", @data_event_id = eventPost.EventId })</td>
+                    }
+
+                    <td>
+                        <a class="event-name" href="@Url.Action("EventDetails", "Events", new {area = "", eventId = eventPost.EventId})">
+                            @eventPost.EventName
+                        </a>
+                    </td>
+                    <td>@eventPost.EventDate.ToString("M")</td>
+
+                    @if (eventPost.EventDate.AddDays(1) < DateTime.Now)
+                    {
+                        //if this even has passed then disable ability to edit this event
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td><a class="edit-event" href="@Url.Action("EditEventDetails", "Admin", new {eventId = eventPost.EventId})">Edit</a></td>
+                    }
+                    
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function() {
+    //initialize update event table
+        $('#update-events-table')
+            .on('change', '.post-status', function () {
+                var eventId = $(this).data('event-id');
+                var postStatus = $(this).val();
+                $.ajax({
+                    type: 'Post',
+                    data: {
+                        eventId: eventId,
+                        postStatus : postStatus
+                    },
+                    url: '@Url.Action("UpdateEventPostStatus", "Admin")',
+                    success: function (results) {
+
+                    },
+                    error: function(error) {
+                        console.log('error');
+                    }
+                });
+            })
+            .DataTable(
+            {
+                searching: true,
+                bLengthChange: false,
+                bPaginate: true,
+                bInfo: false,
+                "ordering": false
+
+            }
+        );
+
+    });
+
+    //Function to disable the links for testing.
+    $('.disabled').on('click',
+        function(e) {
+            e.preventDefault();
+        });
+
+
+
+</script>
