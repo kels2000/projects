@@ -1,0 +1,5 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <StringProperty Name="LinkedSettingsFile">..\USFS.ProjectTemplate.WebUI\Settings.StyleCop</StringProperty>
+  </GlobalSettings>
+</StyleCopSettings>

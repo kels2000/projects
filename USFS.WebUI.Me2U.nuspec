@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$builddefinition$</id>
+    <title>Me2U</title>
+    <version>$version$</version>
+    <authors>USFS</authors>
+    <owners>USFS</owners>
+    <licenseUrl>http://www.unitedshore.com</licenseUrl>
+    <projectUrl>http://www.unitedshore.com</projectUrl>
+    <copyright>Copyright 2017</copyright>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The Me2U website</description>
+    <releaseNotes></releaseNotes>    
+  </metadata>
+</package>
